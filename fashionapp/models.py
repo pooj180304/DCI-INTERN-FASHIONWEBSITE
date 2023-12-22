@@ -9,10 +9,10 @@ class UserProfile(models.Model):
     type = models.CharField(max_length=50)
 
     def __str__(self):
-        return self.name
+        return self.id
 
 class VendorDetails(models.Model):
-    id = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
+    user_profile = models.ForeignKey(UserProfile, on_delete=models.CASCADE)
     business_phone = models.CharField(max_length=15)
     GSTIN_number = models.CharField(max_length=15)
     business_name = models.CharField(max_length=255)
