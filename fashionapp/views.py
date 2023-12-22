@@ -12,8 +12,8 @@ def index(req):
         user_type = 'Customer'
         if password1 == password2:
             UserProfile.objects.create(name=name,email=email,password=password1,mobile_number=mobile,type=user_type)
-            return render(req, 'index.html')
+            return render(req, 'register_user.html')
         else:
             err_msg = "Passwords do not match"
-            return render(req, 'index.html', {'er_msg': err_msg})
-    return render(req, 'index.html')
+            return render(req, 'register_user.html', {'er_msg': err_msg})
+    return render(req, 'register_user.html')
