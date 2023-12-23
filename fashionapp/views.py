@@ -27,7 +27,6 @@ def vendor_registration(request):
     success_message = None
 
     if request.method == 'POST':
-        # Process the form data
         business_phone = request.POST.get('business_phone')
         GSTIN_number = request.POST.get('GSTIN_number')
         business_name = request.POST.get('business_name')
@@ -36,10 +35,8 @@ def vendor_registration(request):
         city = request.POST.get('city')
         state = request.POST.get('state')
 
-        # Get the last recently generated user ID
         user_id = UserProfile.objects.latest('id').id
 
-        # Create a VendorDetails object
         vendor_details = VendorDetails.objects.create(
             user_profile_id=user_id,
             business_phone=business_phone,
@@ -51,7 +48,6 @@ def vendor_registration(request):
             state=state
         )
 
-        # Set success_message or perform other actions as needed
         success_message = "Registration successful!"
 
     return render(request, 'vendor_registration.html', {'er_msg': er_msg, 'success_message': success_message})
