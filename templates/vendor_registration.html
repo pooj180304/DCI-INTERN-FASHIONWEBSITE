@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Registration</title>
+</head>
+<body>
+    <h2>Vendor Registration</h2>
+
+    {% if er_msg %}
+        <p style="color: red;">{{ er_msg }}</p>
+    {% endif %}
+
+    {% if success_message %}
+        <p style="color: green;">{{ success_message }}</p>
+    {% endif %}
+
+    <form method="post" action="{% url 'vendor_registration' %}?user_id={{ user_id }}">
+        {% csrf_token %}
+        
+        <label for="business_phone">Business Phone:</label>
+        <input type="text" id="business_phone" name="business_phone" required>
+
+        <label for="GSTIN_number">GSTIN Number:</label>
+        <input type="text" id="GSTIN_number" name="GSTIN_number" required>
+
+        <label for="business_name">Business Name:</label>
+        <input type="text" id="business_name" name="business_name" required>
+
+        <label for="street">Street:</label>
+        <input type="text" id="street" name="street" required>
+
+        <label for="postal_code">Postal Code:</label>
+        <input type="text" id="postal_code" name="postal_code" required>
+
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city" required>
+
+        <label for="state">State:</label>
+        <input type="text" id="state" name="state" required>
+
+        <button type="submit">Register</button>
+    </form>
+</body>
+</html>

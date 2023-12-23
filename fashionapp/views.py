@@ -1,6 +1,7 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
 from fashionapp.models import UserProfile, VendorDetails, OrderDetails, ProductDetails, ProductReviews
+from django.contrib.auth.models import User
 
 def index(req):
     if req.method == 'POST':
@@ -11,9 +12,46 @@ def index(req):
         mobile = req.POST.get('mobilenumber')
         user_type = 'Customer'
         if password1 == password2:
-            UserProfile.objects.create(name=name,email=email,password=password1,mobile_number=mobile,type=user_type)
-            return render(req, 'register_user.html')
+            user_profile = UserProfile.objects.create(name=name,email=email,password=password1,mobile_number=mobile,type=user_type)
+            return render(req, 'register_user.html', {'user_id': user_profile.id})
         else:
             err_msg = "Passwords do not match"
             return render(req, 'register_user.html', {'er_msg': err_msg})
     return render(req, 'register_user.html')
+
+from django.shortcuts import render, redirect, get_object_or_404
+from fashionapp.models import UserProfile, VendorDetails
+
+def vendor_registration(request):
+    er_msg = None
+    success_message = None
+
+    if request.method == 'POST':
+        # Process the form data
+        business_phone = request.POST.get('business_phone')
+        GSTIN_number = request.POST.get('GSTIN_number')
+        business_name = request.POST.get('business_name')
+        street = request.POST.get('street')
+        postal_code = request.POST.get('postal_code')
+        city = request.POST.get('city')
+        state = request.POST.get('state')
+
+        # Get the last recently generated user ID
+        user_id = UserProfile.objects.latest('id').id
+
+        # Create a VendorDetails object
+        vendor_details = VendorDetails.objects.create(
+            user_profile_id=user_id,
+            business_phone=business_phone,
+            GSTIN_number=GSTIN_number,
+            business_name=business_name,
+            street=street,
+            postal_code=postal_code,
+            city=city,
+            state=state
+        )
+
+        # Set success_message or perform other actions as needed
+        success_message = "Registration successful!"
+
+    return render(request, 'vendor_registration.html', {'er_msg': er_msg, 'success_message': success_message})
