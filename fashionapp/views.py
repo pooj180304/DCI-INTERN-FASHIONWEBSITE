@@ -12,15 +12,29 @@ def index(req):
         mobile = req.POST.get('mobilenumber')
         user_type = 'Customer'
         if password1 == password2:
-            user_profile = UserProfile.objects.create(name=name,email=email,password=password1,mobile_number=mobile,type=user_type)
-            return render(req, 'register_user.html', {'user_id': user_profile.id})
+            UserProfile.objects.create(name=name,email=email,password=password1,mobile_number=mobile,type=user_type)
+            success_message = "Registration successful!"
+            return render(req, 'register_user.html',{'success_message': success_message})
         else:
             err_msg = "Passwords do not match"
             return render(req, 'register_user.html', {'er_msg': err_msg})
     return render(req, 'register_user.html')
 
-from django.shortcuts import render, redirect, get_object_or_404
-from fashionapp.models import UserProfile, VendorDetails
+def vendor(req):
+    if req.method == 'POST':
+        name = req.POST.get('name')
+        email = req.POST.get('email')
+        password1 = req.POST.get('password')
+        password2 = req.POST.get('confirmPassword')
+        mobile = req.POST.get('mobilenumber')
+        user_type = 'Vendor'
+        if password1 == password2:
+            user_profile = UserProfile.objects.create(name=name,email=email,password=password1,mobile_number=mobile,type=user_type)
+            return render(req, 'vendor_registration.html', {'user_id': user_profile.id})
+        else:
+            err_msg = "Passwords do not match"
+            return render(req, 'register_vendor.html', {'er_msg': err_msg})
+    return render(req, 'register_vendor.html')
 
 def vendor_registration(request):
     er_msg = None
