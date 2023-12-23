@@ -4,20 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Product List</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+
+        .product-container {
+            border: 1px solid #ddd;
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        h2 {
+            color: #007bff;
+        }
+
+        img {
+            width: 500px;  /* Ensure the image does not exceed its container */
+            height: 500px;
+            margin-top: 10px;
+            border: 1px solid #ddd;  /* Add a border for better separation */
+            border-radius: 5px;  /* Optional: Add rounded corners */
+        }
+
+        p {
+            margin: 5px 0;
+        }
+    </style>
 </head>
 <body>
     <h1>Product List</h1>
 
     {% for product in products %}
-        <div>
+        <div class="product-container">
             <h2>Product ID: {{ product.product_id }}</h2>
             <p>Product Name: {{ product.product_name }}</p>
             <p>Availability: {{ product.availability }}</p>
             <p>Size: {{ product.size }}</p>
             <p>Colours: {{ product.colours }}</p>
             <p>Description: {{ product.description }}</p>
-            <p>Cost: {{ product.cost }}</p>
-            <img src="{{ product.images.url }}" alt="">
+            <p>Cost: ${{ product.cost }}</p>
+            <img src="/media/{{ product.images }}" alt="{{ product.product_name }}">
             <p>Category: {{ product.category }}</p>
             <p>Sub Category: {{ product.sub_category }}</p>
             <p>Product Vendor: {{ product.product_vendor }}</p>
