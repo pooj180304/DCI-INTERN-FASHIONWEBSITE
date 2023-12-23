@@ -14,7 +14,7 @@ def index(req):
         if password1 == password2:
             UserProfile.objects.create(name=name,email=email,password=password1,mobile_number=mobile,type=user_type)
             success_message = "Registration successful!"
-            return render(req, 'register_user.html',{'success_message': success_message})
+            return render(req, 'login_user.html')
         else:
             err_msg = "Passwords do not match"
             return render(req, 'register_user.html', {'er_msg': err_msg})
@@ -64,4 +64,20 @@ def vendor_registration(request):
 
         success_message = "Registration successful!"
 
-    return render(request, 'vendor_registration.html', {'er_msg': er_msg, 'success_message': success_message})
+    return render(request, 'login_user.html')
+
+def user_login(req):
+    if req.method=='POST':
+        mail = req.POST.get('email')
+        pw = req.POST.get('password')
+        type = req.POST.get('userType')
+        user = get_object_or_404(UserProfile, email=mail)
+        if pw==user.password:
+            if user.type=='Customer':
+                return render(req,'customer_page.html')
+            else:
+                return render(req,'vendor_page.html')
+        else:
+            e_msg = 'incorrect email id or password'
+            return render(req,'login_user.html',{'e_msg':e_msg})
+    return render(req,'login_user.html')
