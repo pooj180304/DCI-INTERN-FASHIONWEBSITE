@@ -4,8 +4,49 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VENDOR PAGE</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #555;
+            padding: 10px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            margin: 0 10px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-    <h1>This is vendor page</h1>
+    <nav>
+        <a href="{% url 'add_product' vendor.id  %}">Add Product</a>
+        <a href="{% url 'view_orders'  %}">View Orders</a>
+        <a href="{% url 'display_product' vendor.id  %}">Display Products</a>
+        <a href="{% url 'visualize'  %}">Evaluate myself</a>
+        <a href="{% url 'vendor_profile' %}">Profile</a>
+    </nav>
+        <h1>HELLO {{vendor.id}}</h1>
+        <h1>HELLO {{vendor.name}}</h1>
+   
+
 </body>
 </html>

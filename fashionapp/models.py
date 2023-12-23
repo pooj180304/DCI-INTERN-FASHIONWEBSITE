@@ -20,14 +20,14 @@ class VendorDetails(models.Model):
 
 class ProductDetails(models.Model):
     product_id = models.AutoField(primary_key=True)
-    product_vendor = models.ForeignKey(VendorDetails, on_delete=models.CASCADE)
+    product_vendor = models.IntegerField()  
     product_name = models.CharField(max_length=255)
     availability = models.IntegerField()
     size = models.CharField(max_length=15)
     colours = models.CharField(max_length=55)
     description = models.CharField(max_length=555)
     cost = models.IntegerField()
-    images = models.ImageField(upload_to="ProductImages/")
+    images = models.ImageField(upload_to="images/")
     category = models.CharField(max_length=35)
     sub_category = models.CharField(max_length=35)
 
@@ -46,3 +46,4 @@ class ProductReviews(models.Model):
     product_review = models.CharField(max_length=255)
     review_pid = models.ForeignKey(ProductDetails, on_delete=models.CASCADE)
     ratings = models.IntegerField()
+
