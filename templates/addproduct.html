@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Input Form</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: #4caf50;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Product Information</h2>
+
+<form action="{% url 'store_product' id %} " method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h1> HELLO VENDOR WITH ID:{{id}}</h1>
+        <label for="product_name">Product Name:</label>
+        <input type="text" id="product_name" name="product_name" required>
+
+        <label for="availability">Availability:</label>
+        <input type="number" id="availability" name="availability">
+
+        <label for="size">Size:</label>
+        <input type="text" id="size" name="size">
+
+        <label for="colours">Colours:</label>
+        <input type="text" id="colours" name="colours">
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" rows="4" cols="50" required></textarea>
+
+        <label for="cost">Cost:</label>
+        <input type="number" id="cost" name="cost" required>
+
+        <label for="images">Images:</label>
+        <input type="file" id="images" name="images" >
+
+        <label for="category">Category:</label>
+<select id="category" name="category" required>
+    <option value="men">Men</option>
+    <option value="women">Women</option>
+    <option value="women">Don't look for aditional option</option>
+</select>
+
+
+        <label for="sub_category">Sub Category:</label>
+        <input type="text" id="sub_category" name="sub_category">
+
+        <input type="submit" value="Submit">
+    </form>
+
+</body>
+</html>

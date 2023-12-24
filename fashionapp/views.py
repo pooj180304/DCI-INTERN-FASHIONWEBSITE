@@ -14,7 +14,7 @@ def index(req):
         if password1 == password2:
             UserProfile.objects.create(name=name,email=email,password=password1,mobile_number=mobile,type=user_type)
             success_message = "Registration successful!"
-            return render(req, 'register_user.html',{'success_message': success_message})
+            return render(req, 'login_user.html')
         else:
             err_msg = "Passwords do not match"
             return render(req, 'register_user.html', {'er_msg': err_msg})
@@ -48,7 +48,6 @@ def vendor_registration(request):
         postal_code = request.POST.get('postal_code')
         city = request.POST.get('city')
         state = request.POST.get('state')
-
         user_id = UserProfile.objects.latest('id').id
 
         vendor_details = VendorDetails.objects.create(
@@ -64,4 +63,69 @@ def vendor_registration(request):
 
         success_message = "Registration successful!"
 
-    return render(request, 'vendor_registration.html', {'er_msg': er_msg, 'success_message': success_message})
+    return render(request, 'login_user.html')
+
+def user_login(req):
+    if req.method=='POST':
+        mail = req.POST.get('email')
+        pw = req.POST.get('password')
+        type = req.POST.get('userType')
+        user = get_object_or_404(UserProfile, email=mail)
+        if pw==user.password:
+            if user.type=='Customer':
+                return render(req,'customer_page.html',{'customer':user})
+            else:
+                return render(req,'vendor_page.html' , {'vendor':user})
+        else:
+            e_msg = 'incorrect email id or password'
+            return render(req,'login_user.html',{'e_msg':e_msg})
+    return render(req,'login_user.html')
+
+def add_product(request , vendorid):
+    return render(request, 'addproduct.html' , { 'id' : vendorid})
+
+
+def store_product(request, vendorid):
+    if request.method == 'POST':
+        product_name = request.POST.get('product_name')
+        availability = request.POST.get('availability')
+        size = request.POST.get('size')
+        colours = request.POST.get('colours')
+        description = request.POST.get('description')
+        cost = request.POST.get('cost')
+        images = request.FILES.get('images')
+        category = request.POST.get('category')
+        sub_category = request.POST.get('sub_category')   
+
+        # Create ProductDetails without saving it to the database first
+        product_details = ProductDetails(
+            product_vendor=vendorid,
+            product_name=product_name,
+            availability=availability,
+            size=size,
+            colours=colours,
+            description=description,
+            cost=cost,
+            images = images,
+            category=category,
+            sub_category=sub_category
+        )
+
+        product_details.save()
+        return HttpResponse("stored")
+
+    
+
+
+def view_orders(request):
+    return render(request, 'vieworders.html')
+
+def display_product(request , vendorid):
+    products = ProductDetails.objects.filter(product_vendor=vendorid).values()
+    return render(request, 'displayproduct.html', {'products':products})
+
+def visualize(request):
+    return render(request, 'visualize.html')
+
+def vendor_profile(request):
+    return render(request, 'vendorprofile.html')
