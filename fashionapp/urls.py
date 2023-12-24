@@ -10,6 +10,6 @@ urlpatterns = [
     path('view_orders/', views.view_orders, name='view_orders'),
     path('display_product/<int:vendorid>/', views.display_product, name='display_product'),
     path('visualize/', views.visualize, name='visualize'),
-    path('vendor_profile/', views.vendor_profile, name='vendor_profile'),
+    path('vendor_profile/<int:vendorid>/', views.vendor_profile, name='vendor_profile'),
     path('store_product/<int:vendorid>/', views.store_product, name='store_product'),
 ]

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Profile</title>
+</head>
+<body>
+    {% if vendor_details %}
+        <h2>Vendor Profile</h2>
+        <p><strong>Name:</strong> {{ vendor_details.user_profile.name }}</p>
+        <p><strong>Email:</strong> {{ vendor_details.user_profile.email }}</p>
+        <p><strong>Mobile Number:</strong> {{ vendor_details.user_profile.mobile_number }}</p>
+        <p><strong>Type:</strong> {{ vendor_details.user_profile.type }}</p>
+        
+        <p><strong>Business Name:</strong> {{ vendor_details.business_name }}</p>
+        <p><strong>Business Phone:</strong> {{ vendor_details.business_phone }}</p>
+        <p><strong>GSTIN Number:</strong> {{ vendor_details.GSTIN_number }}</p>
+        <p><strong>Street:</strong> {{ vendor_details.street }}</p>
+        <p><strong>Postal Code:</strong> {{ vendor_details.postal_code }}</p>
+        <p><strong>City:</strong> {{ vendor_details.city }}</p>
+        <p><strong>State:</strong> {{ vendor_details.state }}</p>
+
+    {% elif error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+
+    {% else %}
+        <p style="color: red;">No vendor details available.</p>
+    {% endif %}
+</body>
+</html>

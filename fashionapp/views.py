@@ -97,7 +97,6 @@ def store_product(request, vendorid):
         category = request.POST.get('category')
         sub_category = request.POST.get('sub_category')   
 
-        # Create ProductDetails without saving it to the database first
         product_details = ProductDetails(
             product_vendor=vendorid,
             product_name=product_name,
@@ -114,9 +113,6 @@ def store_product(request, vendorid):
         product_details.save()
         return HttpResponse("stored")
 
-    
-
-
 def view_orders(request):
     return render(request, 'vieworders.html')
 
@@ -127,5 +123,9 @@ def display_product(request , vendorid):
 def visualize(request):
     return render(request, 'visualize.html')
 
-def vendor_profile(request):
-    return render(request, 'vendorprofile.html')
+def vendor_profile(request, vendorid):
+    try:
+        vendor_details = VendorDetails.objects.get(user_profile_id=vendorid)
+    except VendorDetails.DoesNotExist:
+        return render(request, 'vendor_page.html')  
+    return render(request, 'vendorprofile.html', {'vendor_details': vendor_details})
