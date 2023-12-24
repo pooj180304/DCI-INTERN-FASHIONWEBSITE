@@ -129,3 +129,25 @@ def vendor_profile(request, vendorid):
     except VendorDetails.DoesNotExist:
         return render(request, 'vendor_page.html')  
     return render(request, 'vendorprofile.html', {'vendor_details': vendor_details})
+
+def edit_and_save_vendor_profile(request, vendorid):
+    vendor_details = get_object_or_404(VendorDetails, user_profile_id=vendorid)
+
+    if request.method == 'POST':
+        vendor_details.user_profile.name = request.POST.get('name')
+        vendor_details.user_profile.email = request.POST.get('email')
+        vendor_details.user_profile.mobile_number = request.POST.get('mobile_number')
+        vendor_details.business_name = request.POST.get('business_name')
+        vendor_details.business_phone = request.POST.get('business_phone')
+        vendor_details.GSTIN_number = request.POST.get('GSTIN_number')
+        vendor_details.street = request.POST.get('street')
+        vendor_details.postal_code = request.POST.get('postal_code')
+        vendor_details.city = request.POST.get('city')
+        vendor_details.state = request.POST.get('state')
+
+        vendor_details.user_profile.save()
+        vendor_details.save()
+
+        return redirect('vendor_profile', vendorid=vendorid)
+
+    return render(request, 'edit_vendor_profile.html', {'vendor_details': vendor_details})

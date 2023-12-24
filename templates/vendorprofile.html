@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vendor Profile</title>
+    <style>
+        a{
+            background-color: green;
+            padding: 10px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: white;
+        }
+    </style>
 </head>
 <body>
     {% if vendor_details %}
@@ -20,6 +29,8 @@
         <p><strong>Postal Code:</strong> {{ vendor_details.postal_code }}</p>
         <p><strong>City:</strong> {{ vendor_details.city }}</p>
         <p><strong>State:</strong> {{ vendor_details.state }}</p>
+        <a href="{% url 'edit_and_save_vendor_profile' vendor_details.user_profile_id %}">Edit Profile</a>
+        
 
     {% elif error_message %}
         <p style="color: red;">{{ error_message }}</p>
