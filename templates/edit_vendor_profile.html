@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Vendor Profile</title>
+</head>
+<body>
+    <h2>Edit Vendor Profile</h2>
+
+    <form method="post" action="{% url 'edit_and_save_vendor_profile' vendor_details.user_profile_id %}">
+        {% csrf_token %}
+
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" value="{{ vendor_details.user_profile.name }}" required>
+
+        <label for="email">Email:</label>
+        <input type="text" id="email" name="email" value="{{ vendor_details.user_profile.email }}" required>
+
+        <label for="mobile_number">Mobile number:</label>
+        <input type="tel" id="mobile_number" name="mobile_number" value="{{ vendor_details.user_profile.mobile_number }}" required>
+
+        <label for="business_name">Business Name:</label>
+        <input type="text" id="business_name" name="business_name" value="{{ vendor_details.business_name }}" required>
+
+        <label for="business_phone">Business Phone:</label>
+        <input type="text" id="business_phone" name="business_phone" value="{{ vendor_details.business_phone }}" required>
+
+        <label for="GSTIN_number">GSTIN Number:</label>
+        <input type="text" id="GSTIN_number" name="GSTIN_number" value="{{ vendor_details.GSTIN_number }}" required>
+
+        <label for="street">Street:</label>
+        <input type="text" id="street" name="street" value="{{ vendor_details.street }}" required>
+
+        <label for="postal_code">Postal Code:</label>
+        <input type="text" id="postal_code" name="postal_code" value="{{ vendor_details.postal_code }}" required>
+
+        <label for="city">City:</label>
+        <input type="text" id="city" name="city" value="{{ vendor_details.city }}" required>
+
+        <label for="state">State:</label>
+        <input type="text" id="state" name="state" value="{{ vendor_details.state }}" required>
+
+        <button type="submit">Save</button>
+    </form>
+</body>
+</html>
