@@ -73,7 +73,8 @@ def user_login(req):
         user = get_object_or_404(UserProfile, email=mail)
         if pw==user.password:
             if user.type=='Customer':
-                return render(req,'customer_page.html',{'customer':user})
+                products = products = ProductDetails.objects.all().values()
+                return render(req,'customer_page.html',{'customer':user,'products':products})
             else:
                 return render(req,'vendor_page.html' , {'vendor':user})
         else:
