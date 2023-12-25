@@ -47,3 +47,9 @@ class ProductReviews(models.Model):
     review_pid = models.ForeignKey(ProductDetails, on_delete=models.CASCADE)
     ratings = models.IntegerField()
 
+class UserCart(models.Model):
+    cart_userid = models.IntegerField()
+    cart_product=models.IntegerField()
+    
+
+
