@@ -3,12 +3,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Product Details</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        h1 {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+            margin: 0;
+        }
+
+        .product-container {
+            display: flex;
+            margin: 20px auto;
+            max-width: 800px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-image {
+            flex: 1;
+            text-align: center;
+            padding: 20px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-details {
+            flex: 1;
+            padding: 20px;
+        }
+
+        h2 {
+            color: #333;
+            margin-top: 0;
+        }
+
+        p {
+            margin: 10px 0;
+            color: #555;
+        }
+    </style>
 </head>
 <body>
-    {% for i in cart %}
-    <h1>{{i.cart_userid}}</h1>
-    <h1>{{i.cart_product}}</h1>
+    <h1>HELLO {{ user.name }}!!</h1>
+    {% for item in cart %}
+    <div class="product-container">
+        <div class="product-image">
+            <img src="/media/{{ item.images }}" alt="{{ item.product_name }}" width="100">
+        </div>
+        <div class="product-details">
+            <h2>{{ item.product_name }}</h2>
+            <p>Availability: {{ item.availability }}</p>
+            <p>Size: {{ item.size }}</p>
+            <p>Colours: {{ item.colours }}</p>
+            <p>Description: {{ item.description }}</p>
+            <p>Cost: {{ item.cost }}</p>
+            <p>Category: {{ item.category }}</p>
+            <p>Sub-Category: {{ item.sub_category }}</p>
+        </div>
+    </div>
     {% endfor %}
 </body>
 </html>

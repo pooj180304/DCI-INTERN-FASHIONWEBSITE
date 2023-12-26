@@ -163,5 +163,7 @@ def add_to_cart(request , customer_id , product_id):
 
 def cart(request , customer_id):
     cart = UserCart.objects.filter(cart_userid=customer_id)
-    
-    return render(request , 'cart.html' , {'cart':cart})
+    cart_products = ProductDetails.objects.filter(product_id__in=cart.values_list('cart_product', flat=True))
+    user = UserProfile.objects.get(id=customer_id)
+
+    return render(request , 'cart.html' , {'cart':cart_products , 'user':user})
