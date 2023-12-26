@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders placed</title>
+</head>
+<body>
+    {%for i in orders%}
+    <div>
+        <h2>{{i.product_ordered_id}}</h2>
+        <p>{{i.invoice_number}}</p>
+        <p>{{i.cost}}</p>
+        <p>{{i.payment_details}}</p>
+        <p>{{i.address}}</p>
+        <p>{{i.quantity}}</p>
+    </div>
+    {% endfor %}
+</body>
+</html>

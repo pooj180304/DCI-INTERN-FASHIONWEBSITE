@@ -66,21 +66,27 @@ def vendor_registration(request):
     return render(request, 'login_user.html')
 
 def user_login(req):
-    if req.method=='POST':
+    if req.method == 'POST':
         mail = req.POST.get('email')
         pw = req.POST.get('password')
         type = req.POST.get('userType')
         user = get_object_or_404(UserProfile, email=mail)
-        if pw==user.password:
-            if user.type=='Customer':
-                products = products = ProductDetails.objects.all().values()
-                return render(req,'customer_page.html',{'customer':user,'products':products})
+
+        # Filter VendorDetails using user_profile
+        vend = VendorDetails.objects.filter(user_profile=user)
+
+        if pw == user.password:
+            if user.type == 'Customer':
+                products = ProductDetails.objects.all().values()
+                return render(req, 'customer_page.html', {'customer': user, 'products': products})
             else:
-                return render(req,'vendor_page.html' , {'vendor':user})
+                return render(req, 'vendor_page.html', {'vendor': user, 'vend': vend[0]})
         else:
             e_msg = 'incorrect email id or password'
-            return render(req,'login_user.html',{'e_msg':e_msg})
-    return render(req,'login_user.html')
+            return render(req, 'login_user.html', {'e_msg': e_msg})
+
+    return render(req, 'login_user.html')
+
 
 def add_product(request , vendorid):
     return render(request, 'addproduct.html' , { 'id' : vendorid})
@@ -114,8 +120,9 @@ def store_product(request, vendorid):
         product_details.save()
         return HttpResponse("stored")
 
-def view_orders(request):
-    return render(request, 'vieworders.html')
+def view_orders(request,vendorid):
+    orderitems = OrderDetails.objects.filter(vend_id_id=vendorid).values()
+    return render(request, 'vieworders.html',{'orders':orderitems})
 
 def display_product(request , vendorid):
     products = ProductDetails.objects.filter(product_vendor=vendorid).values()
