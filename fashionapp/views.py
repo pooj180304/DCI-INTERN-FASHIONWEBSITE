@@ -191,3 +191,51 @@ def edit_product(request, product_id):
         return redirect('display_product', vendorid=product_details.product_vendor)
 
     return render(request, 'editproduct.html', {'product_details': product_details})
+
+def place_orderdetails(request,customer_id , product_id ):
+    product_details = get_object_or_404(ProductDetails, product_id=product_id)
+    customer = get_object_or_404(UserProfile, id=customer_id)
+    if request.method == 'POST':
+        # Process the form data
+        quantity = request.POST.get('quantity')
+        payment_type = request.POST.get('payment_type')
+        address = request.POST.get('address')
+
+        # Assuming you have a method to create an order and update the status
+        create_order(product_details, customer, quantity, payment_type, address)
+
+        # Redirect to a confirmation page or another appropriate page
+        return HttpResponse("Ordered placed")  # Change the URL as needed
+    return render(request,"place_orderdetails.html",{'place_order':product_details,'customer_detail':customer})
+    
+def create_order(product, customer, quantity, payment_type, address):
+    vendor = VendorDetails.objects.get(user_profile__id=product.product_vendor)
+
+    try:
+        quantity = int(quantity)
+
+        if product.availability >= quantity > 0:
+            order = OrderDetails(
+                product_ordered=product,
+                cust_id=customer,
+                vend_id=vendor,
+                quantity=quantity,
+                payment_details=payment_type,
+                address=address,
+                status='Ordered',
+                cost=product.cost * quantity  
+            )
+            order.save()
+
+            product.availability -= quantity
+            product.save()
+
+            return True 
+        else:
+            return False  
+    except ValueError:
+       
+        return False
+
+  
+    
