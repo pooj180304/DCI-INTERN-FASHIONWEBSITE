@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Product Details</title>
+</head>
+<body>
+    <h2>Edit Product Details</h2>
+
+    <form method="post" action="{% url 'edit_product' product_details.product_id %}" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <label for="product_vendor">Product Vendor:</label>
+        <input type="number" id="product_vendor" name="product_vendor" value="{{ product_details.product_vendor }}" >
+
+        <label for="product_name">Product Name:</label>
+        <input type="text" id="product_name" name="product_name" value="{{ product_details.product_name }}" >
+
+        <label for="availability">Availability:</label>
+        <input type="number" id="availability" name="availability" value="{{ product_details.availability }}" >
+
+        <label for="size">Size:</label>
+        <input type="text" id="size" name="size" value="{{ product_details.size }}" >
+
+        <label for="colours">Colours:</label>
+        <input type="text" id="colours" name="colours" value="{{ product_details.colours }}" >
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" >{{ product_details.description }}</textarea>
+
+        <label for="cost">Cost:</label>
+        <input type="number" id="cost" name="cost" value="{{ product_details.cost }}" >
+
+        <label for="images">Images:</label>
+        <input type="file" id="images" name="images" value="{{product_details.images}}"accept="image/*">
+
+        <label for="category">Category:</label>
+        <input type="text" id="category" name="category" value="{{ product_details.category }}" >
+
+        <label for="sub_category">Sub Category:</label>
+        <input type="text" id="sub_category" name="sub_category" value="{{ product_details.sub_category }}" >
+
+        <button type="submit">Save</button>
+    </form>
+</body>
+</html>
