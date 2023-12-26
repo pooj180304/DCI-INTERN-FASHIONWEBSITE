@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from fashionapp.models import UserProfile, VendorDetails, OrderDetails, ProductDetails, ProductReviews
+from fashionapp.models import UserProfile, VendorDetails, OrderDetails, ProductDetails, ProductReviews , UserCart
 from django.contrib.auth.models import User
 
 def index(req):
@@ -152,3 +152,16 @@ def edit_and_save_vendor_profile(request, vendorid):
         return redirect('vendor_profile', vendorid=vendorid)
 
     return render(request, 'edit_vendor_profile.html', {'vendor_details': vendor_details})
+
+def add_to_cart(request , customer_id , product_id):
+    cart_details = UserCart(
+        cart_userid = customer_id,
+        cart_product = product_id
+    )
+    cart_details.save()
+    return HttpResponse("stored")
+
+def cart(request , customer_id):
+    cart = UserCart.objects.filter(cart_userid=customer_id)
+    
+    return render(request , 'cart.html' , {'cart':cart})
