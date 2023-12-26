@@ -167,3 +167,27 @@ def cart(request , customer_id):
     user = UserProfile.objects.get(id=customer_id)
 
     return render(request , 'cart.html' , {'cart':cart_products , 'user':user})
+
+def edit_product(request, product_id):
+    product_details = get_object_or_404(ProductDetails, product_id=product_id)
+
+    if request.method == 'POST':
+        product_details.product_vendor = request.POST.get('product_vendor')
+        product_details.product_name = request.POST.get('product_name')
+        product_details.availability = request.POST.get('availability')
+        product_details.size = request.POST.get('size')
+        product_details.colours = request.POST.get('colours')
+        product_details.description = request.POST.get('description')
+        product_details.cost = request.POST.get('cost')
+        product_details.category = request.POST.get('category')
+        product_details.sub_category = request.POST.get('sub_category')
+
+        new_images = request.FILES.get('images')
+        if new_images:
+            product_details.images = new_images
+
+        product_details.save()
+
+        return redirect('display_product', vendorid=product_details.product_vendor)
+
+    return render(request, 'editproduct.html', {'product_details': product_details})

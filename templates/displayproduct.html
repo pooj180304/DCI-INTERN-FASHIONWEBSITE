@@ -61,6 +61,7 @@
             <p>Category: {{ product.category }}</p>
             <p>Sub Category: {{ product.sub_category }}</p>
             <p>Product Vendor: {{ product.product_vendor }}</p>
+            <a href="{% url 'edit_product' product.product_id %}">Edit</a>
         </div>
     {% endfor %}
 </body>

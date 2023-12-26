@@ -104,7 +104,7 @@
                 <p>Sub Category: {{ product.sub_category }}</p>
                 <p>Product Vendor: {{ product.product_vendor }}</p>
                 <button><a href="{% url 'add_tocart' customer.id product.product_id %}">Add to cart</a></button>
-                <button>Place Order</button>
+                <button><a href="{% url 'place_order' product.product_id %}"> Place Order </a></button>
             </div>
         </div>
     {% endfor %}
