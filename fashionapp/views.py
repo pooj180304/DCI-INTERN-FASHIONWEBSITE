@@ -208,7 +208,7 @@ def place_orderdetails(request,customer_id , product_id ):
         payment_type = request.POST.get('payment_type')
         address = request.POST.get('address')
 
-        # Assuming you have a method to create an order and update the status
+
         create_order(product_details, customer, quantity, payment_type, address)
 
         # Redirect to a confirmation page or another appropriate page
