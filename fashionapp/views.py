@@ -242,5 +242,23 @@ def create_order(product, customer, quantity, payment_type, address):
        
         return False
 
-  
+from django.shortcuts import render
+import pandas as pd
+
+def visualize(request):
+    # Assuming you have already read the CSV file into a DataFrame
+    import pandas as pd
+    df = pd.read_csv("salesdata.csv", dtype={"23": str}, low_memory=False)
+
+    # Drop the column "Unnamed: 22"
+    df = df.drop("Unnamed: 22", axis=1, errors="ignore")
+
+    # Convert the DataFrame to an HTML table
+    html_table = df.to_html(classes="table table-striped")
+
+    # Pass the HTML table to the template context
+    context = {'html_table': html_table}
+
+    return render(request, 'visualize.html', context)
+
     
