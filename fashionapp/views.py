@@ -277,10 +277,10 @@ def visualize(request):
 
     return render(request, 'visualize.html', context)
 
- def customer_profile(request, customer_id):
+def customer_profile(request, customer_id):
     try:
         customer_details = UserProfile.objects.get(id=customer_id)
     except UserProfile.DoesNotExist:
         return render(request, 'customerprofile.html', {'error_message': 'Customer not found.'})
 
-    return render(request, 'customerprofile.html', {'customer_details': customer_details})   
+    return render(request, 'customerprofile.html', {'customer_details': customer_details})
