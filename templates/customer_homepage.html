@@ -73,6 +73,83 @@
             padding-left: 20px;
             border-top: 1px solid #ddd; 
         }
+       
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+
+        nav {
+            background-color: #007bff;
+            padding: 10px;
+            text-align: center;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px;
+            margin: 0 10px;
+        }
+
+        nav a:hover {
+            background-color: #0056b3;
+        }
+
+        .product-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #ddd;
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        .product-details {
+            flex: 1;
+            padding: 20px;
+        }
+
+        .product-image {
+            flex-shrink: 0;
+            width: 200px;
+            height: 200px;
+            margin-right: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        h2 {
+            color: #007bff;
+        }
+
+        p {
+            margin: 5px 0;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -105,13 +182,31 @@
             </div>
         </div>
 
-        <a href="#">My Cart</a>
+        <a href="{% url 'cart' customer.id  %}">My Cart</a>
         <a href="#">My Orders</a>
-        <a href="{% url 'customer_profile' vendor.id  %}">Profile</a>
+        <a href="{% url 'customer_profile' customer.id  %}">Profile</a>
     </nav>
 
-    <main>
-        <p>Welcome to our online store!</p>
-    </main>
+    <h1>HELLO {{customer.name}}</h1>
+    {% for product in products %}
+        <div class="product-container">
+            <img class="product-image" src="/media/{{ product.images }}" alt="{{ product.product_name }}">
+            <div class="product-details">
+                <h2>Product ID: {{ product.product_id }}</h2>
+                <p>Product Name: {{ product.product_name }}</p>
+                <p>Availability: {{ product.availability }}</p>
+                <p>Size: {{ product.size }}</p>
+                <p>Colours: {{ product.colours }}</p>
+                <p>Description: {{ product.description }}</p>
+                <p>Cost: ${{ product.cost }}</p>
+                <p>Category: {{ product.category }}</p>
+                <p>Sub Category: {{ product.sub_category }}</p>
+                <p>Product Vendor: {{ product.product_vendor }}</p>
+                <button><a href="{% url 'add_tocart' customer.id product.product_id %}">Add to cart</a></button>
+                <button><a href="{% url 'place_orderdetails' customer.id product.product_id  %}"> Place Order </a></button>
+            </div>
+        </div>
+    {% endfor %}
+
 </body>
 </html>
