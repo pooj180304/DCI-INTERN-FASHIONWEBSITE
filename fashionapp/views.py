@@ -128,8 +128,7 @@ def display_product(request , vendorid):
     products = ProductDetails.objects.filter(product_vendor=vendorid).values()
     return render(request, 'displayproduct.html', {'products':products})
 
-def visualize(request):
-    return render(request, 'visualize.html')
+
 
 def vendor_profile(request, vendorid):
     try:
@@ -244,5 +243,12 @@ def create_order(product, customer, quantity, payment_type, address):
        
         return False
 
+def visualize(request):
+    # Read the CSV file into a DataFrame
+    import pandas as pd
+    df = pd.read_csv("salesdata.csv", dtype={"23": str}, low_memory=False)
+    df = df.drop("Unnamed: 22", axis=1, errors="ignore")
+    context = {'dataframe': df}  
+    return render(request, 'visualize.html', context)
   
     
