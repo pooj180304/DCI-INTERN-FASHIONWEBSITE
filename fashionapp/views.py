@@ -166,7 +166,20 @@ def add_to_cart(request , customer_id , product_id):
         cart_userid = customer_id,
         cart_product = product_id
     )
-    cart_details.save()
+    existing_cart_item = UserCart.objects.filter(cart_userid=customer_id, cart_product=product_id).first()
+
+    if existing_cart_item:
+        # Update the quantity or take appropriate action
+        existing_cart_item.quantity += 1
+        existing_cart_item.save()
+    else:
+        # Create a new cart item
+        cart_details = UserCart(
+            cart_userid=customer_id,
+            cart_product=product_id,
+        )
+        cart_details.save()
+
     return HttpResponse("stored")
 
 def cart(request , customer_id):
@@ -243,6 +256,13 @@ def create_order(product, customer, quantity, payment_type, address):
        
         return False
 
+<<<<<<< HEAD
+def delete_product(request, product_id):
+    product = UserCart.objects.filter(cart_product=product_id)
+    product.delete()
+    return HttpResponse("Item deleted")
+    
+=======
 def customer_profile(request, customer_id):
     try:
         customer_details = UserProfile.objects.get(id=customer_id)
@@ -250,3 +270,4 @@ def customer_profile(request, customer_id):
         return render(request, 'customerprofile.html', {'error_message': 'Customer not found.'})
 
     return render(request, 'customerprofile.html', {'customer_details': customer_details})
+>>>>>>> 7f2a33c2ed798709ad1a2f1168e8fb38549de5ce
