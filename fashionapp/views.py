@@ -129,8 +129,7 @@ def display_product(request , vendorid):
     products = ProductDetails.objects.filter(product_vendor=vendorid).values()
     return render(request, 'displayproduct.html', {'products':products})
 
-def visualize(request):
-    return render(request, 'visualize.html')
+
 
 def vendor_profile(request, vendorid):
     try:
@@ -261,10 +260,23 @@ def delete_product(request, product_id):
     product.delete()
     return HttpResponse("Item deleted")
     
-def customer_profile(request, customer_id):
-    try:
-        customer_details = UserProfile.objects.get(id=customer_id)
-    except UserProfile.DoesNotExist:
-        return render(request, 'customerprofile.html', {'error_message': 'Customer not found.'})
+from django.shortcuts import render
+import pandas as pd
 
-    return render(request, 'customerprofile.html', {'customer_details': customer_details})
+def visualize(request):
+    # Assuming you have already read the CSV file into a DataFrame
+    import pandas as pd
+    df = pd.read_csv("salesdata.csv", dtype={"23": str}, low_memory=False)
+
+    # Drop the column "Unnamed: 22"
+    df = df.drop("Unnamed: 22", axis=1, errors="ignore")
+
+    # Convert the DataFrame to an HTML table
+    html_table = df.to_html(classes="table table-striped")
+
+    # Pass the HTML table to the template context
+    context = {'html_table': html_table}
+
+    return render(request, 'visualize.html', context)
+
+    
