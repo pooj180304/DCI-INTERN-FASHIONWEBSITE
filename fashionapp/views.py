@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from fashionapp.models import UserProfile, VendorDetails, OrderDetails, ProductDetails, ProductReviews , UserCart
 from django.contrib.auth.models import User
 
+def mainpage(req):
+    return render(req,'landingpage.html')
 def index(req):
     if req.method == 'POST':
         name = req.POST.get('name')
