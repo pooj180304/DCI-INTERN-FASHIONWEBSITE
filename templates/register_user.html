@@ -6,7 +6,7 @@
     <title>USER REGISTRATION</title>
 </head>
 <body>
-    <form method="post" action="{% url 'index' %}">
+    <form method="post" action="{% url 'register_user' %}">
         {% csrf_token %}
         <label for="name">Name:</label>
         <input type="text" id="name" name="name" required>
