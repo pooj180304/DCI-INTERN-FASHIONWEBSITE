@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Profile</title>
+    <style>
+        a {
+            background-color: blue; 
+            padding: 10px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    {% if customer_details %}
+        <h2>Customer Profile</h2>
+        <p><strong>Name:</strong> {{ customer_details.name }}</p>
+        <p><strong>Email:</strong> {{ customer_details.email }}</p>
+        <p><strong>Mobile Number:</strong> {{ customer_details.mobile_number }}</p>
+        <p><strong>Type:</strong> {{ customer_details.type }}</p>
+    {% elif error_message %}
+        <p style="color: red;">{{ error_message }}</p>
+    {% else %}
+        <p style="color: red;">No customer details available.</p>
+    {% endif %}
+</body>
+</html>

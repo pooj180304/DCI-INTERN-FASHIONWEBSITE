@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from fashionapp.models import UserProfile, VendorDetails, OrderDetails, ProductDetails, ProductReviews , UserCart
 from django.contrib.auth.models import User
 
+def mainpage(req):
+    return render(req,'landingpage.html')
 def index(req):
     if req.method == 'POST':
         name = req.POST.get('name')
@@ -72,13 +74,12 @@ def user_login(req):
         type = req.POST.get('userType')
         user = get_object_or_404(UserProfile, email=mail)
 
-        # Filter VendorDetails using user_profile
         vend = VendorDetails.objects.filter(user_profile=user)
 
         if pw == user.password:
             if user.type == 'Customer':
                 products = ProductDetails.objects.all().values()
-                return render(req, 'customer_page.html', {'customer': user, 'products': products})
+                return render(req, 'customer_homepage.html', {'customer': user, 'products': products})
             else:
                 return render(req, 'vendor_page.html', {'vendor': user, 'vend': vend[0]})
         else:
@@ -216,7 +217,6 @@ def place_orderdetails(request,customer_id , product_id ):
     product_details = get_object_or_404(ProductDetails, product_id=product_id)
     customer = get_object_or_404(UserProfile, id=customer_id)
     if request.method == 'POST':
-        # Process the form data
         quantity = request.POST.get('quantity')
         payment_type = request.POST.get('payment_type')
         address = request.POST.get('address')
@@ -224,8 +224,7 @@ def place_orderdetails(request,customer_id , product_id ):
 
         create_order(product_details, customer, quantity, payment_type, address)
 
-        # Redirect to a confirmation page or another appropriate page
-        return HttpResponse("Ordered placed")  # Change the URL as needed
+        return HttpResponse("Ordered placed") 
     return render(request,"place_orderdetails.html",{'place_order':product_details,'customer_detail':customer})
     
 def create_order(product, customer, quantity, payment_type, address):
@@ -257,8 +256,18 @@ def create_order(product, customer, quantity, payment_type, address):
        
         return False
 
+<<<<<<< HEAD
 def delete_product(request, product_id):
     product = UserCart.objects.filter(cart_product=product_id)
     product.delete()
     return HttpResponse("Item deleted")
     
+=======
+def customer_profile(request, customer_id):
+    try:
+        customer_details = UserProfile.objects.get(id=customer_id)
+    except UserProfile.DoesNotExist:
+        return render(request, 'customerprofile.html', {'error_message': 'Customer not found.'})
+
+    return render(request, 'customerprofile.html', {'customer_details': customer_details})
+>>>>>>> 7f2a33c2ed798709ad1a2f1168e8fb38549de5ce
