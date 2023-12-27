@@ -219,8 +219,6 @@ def place_orderdetails(request,customer_id , product_id ):
         quantity = request.POST.get('quantity')
         payment_type = request.POST.get('payment_type')
         address = request.POST.get('address')
-
-
         create_order(product_details, customer, quantity, payment_type, address)
 
         return HttpResponse("Ordered placed") 
@@ -279,4 +277,10 @@ def visualize(request):
 
     return render(request, 'visualize.html', context)
 
-    
+ def customer_profile(request, customer_id):
+    try:
+        customer_details = UserProfile.objects.get(id=customer_id)
+    except UserProfile.DoesNotExist:
+        return render(request, 'customerprofile.html', {'error_message': 'Customer not found.'})
+
+    return render(request, 'customerprofile.html', {'customer_details': customer_details})   
