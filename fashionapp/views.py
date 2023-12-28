@@ -284,7 +284,6 @@ import plotly.express as px
 import pandas as pd
 
 def visualize(request):
-<<<<<<< HEAD
     try:
         # Assuming you have already read the CSV file into a DataFrame
         df = pd.read_csv("./fashionapp/salesdata.csv", dtype={"23": str}, low_memory=False)
@@ -308,13 +307,6 @@ def visualize(request):
         error_message = f"Error: {str(e)}"
         return render(request, 'visualize.html', {'plot_html': None, 'error_message': error_message})
 
-=======
-    import pandas as pd
-    df = pd.read_csv("salesdata.csv", dtype={"23": str}, low_memory=False)
-    df = df.drop("Unnamed: 22", axis=1, errors="ignore")
-    html_table = df.to_html(classes="table table-striped")
-    context = {'html_table': html_table}
->>>>>>> c46d4f13fa68fa3cf2c9cf696f5c8383cecd39ea
 
 
 def customer_profile(request, customer_id):
