@@ -21,6 +21,7 @@
         <p><strong>Email:</strong> {{ customer_details.email }}</p>
         <p><strong>Mobile Number:</strong> {{ customer_details.mobile_number }}</p>
         <p><strong>Type:</strong> {{ customer_details.type }}</p>
+        <a href="{% url 'landing_page_view' %}">Logout</a>
     {% elif error_message %}
         <p style="color: red;">{{ error_message }}</p>
     {% else %}

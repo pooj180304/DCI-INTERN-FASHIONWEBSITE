@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 
 def mainpage(req):
     return render(req,'landingpage.html')
+
 def index(req):
     if req.method == 'POST':
         name = req.POST.get('name')
@@ -71,24 +72,40 @@ def user_login(req):
     if req.method == 'POST':
         mail = req.POST.get('email')
         pw = req.POST.get('password')
-        type = req.POST.get('userType')
         user = get_object_or_404(UserProfile, email=mail)
-
-        vend = VendorDetails.objects.filter(user_profile=user)
 
         if pw == user.password:
             if user.type == 'Customer':
                 products = ProductDetails.objects.all().values()
-                return render(req, 'customer_homepage.html', {'customer': user, 'products': products})
+                men_subcategories = ProductDetails.objects.filter(category='Men').values_list('sub_category', flat=True).distinct()
+                women_subcategories = ProductDetails.objects.filter(category='Women').values_list('sub_category', flat=True).distinct()
+                kids_subcategories = ProductDetails.objects.filter(category='Kids').values_list('sub_category', flat=True).distinct()
+                context = {
+                    'men_subcategories': men_subcategories,
+                    'women_subcategories': women_subcategories,
+                    'kids_subcategories': kids_subcategories,
+                    'customer': user,
+                    'products': products,
+                }
+                
+                return render(req, 'customer_homepage.html', context)
             else:
+                vend = VendorDetails.objects.filter(user_profile=user)
                 return render(req, 'vendor_page.html', {'vendor': user, 'vend': vend[0]})
         else:
-            e_msg = 'incorrect email id or password'
+            e_msg = 'Incorrect email id or password'
             return render(req, 'login_user.html', {'e_msg': e_msg})
 
     return render(req, 'login_user.html')
 
-
+def product_categories_view(request, subcategory):
+    selected_products = ProductDetails.objects.filter(sub_category=subcategory)  
+    context = {
+        'selected_subcategory': subcategory,
+        'selected_products': selected_products,
+    }
+    return render(request, 'product_categories.html', context)
+    
 def add_product(request , vendorid):
     return render(request, 'addproduct.html' , { 'id' : vendorid})
 
@@ -128,8 +145,6 @@ def view_orders(request,vendorid):
 def display_product(request , vendorid):
     products = ProductDetails.objects.filter(product_vendor=vendorid).values()
     return render(request, 'displayproduct.html', {'products':products})
-
-
 
 def vendor_profile(request, vendorid):
     try:
@@ -172,11 +187,11 @@ def add_to_cart(request , customer_id , product_id):
     existing_cart_item = UserCart.objects.filter(cart_userid=customer_id, cart_product=product_id).first()
 
     if existing_cart_item:
-        # Update the quantity
+        # Update the quantity or take appropriate action
         existing_cart_item.quantity += 1
         existing_cart_item.save()
     else:
-        # Create a new cart item with quantity 1
+        # Create a new cart item
         cart_details = UserCart(
             cart_userid=customer_id,
             cart_product=product_id,
@@ -267,17 +282,10 @@ from django.shortcuts import render
 import pandas as pd
 
 def visualize(request):
-    # Assuming you have already read the CSV file into a DataFrame
     import pandas as pd
     df = pd.read_csv("salesdata.csv", dtype={"23": str}, low_memory=False)
-
-    # Drop the column "Unnamed: 22"
     df = df.drop("Unnamed: 22", axis=1, errors="ignore")
-
-    # Convert the DataFrame to an HTML table
     html_table = df.to_html(classes="table table-striped")
-
-    # Pass the HTML table to the template context
     context = {'html_table': html_table}
 
     return render(request, 'visualize.html', context)
@@ -289,3 +297,7 @@ def customer_profile(request, customer_id):
         return render(request, 'customerprofile.html', {'error_message': 'Customer not found.'})
 
     return render(request, 'customerprofile.html', {'customer_details': customer_details})
+
+def landing_page_view(request):
+    return render(request, 'landingpage.html')
+
