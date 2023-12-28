@@ -165,17 +165,22 @@ def add_to_cart(request , customer_id , product_id):
         cart_userid = customer_id,
         cart_product = product_id
     )
+
+    product = get_object_or_404(ProductDetails, product_id=product_id)
+
+    # Check if the item already exists in the cart
     existing_cart_item = UserCart.objects.filter(cart_userid=customer_id, cart_product=product_id).first()
 
     if existing_cart_item:
-        # Update the quantity or take appropriate action
+        # Update the quantity
         existing_cart_item.quantity += 1
         existing_cart_item.save()
     else:
-        # Create a new cart item
+        # Create a new cart item with quantity 1
         cart_details = UserCart(
             cart_userid=customer_id,
             cart_product=product_id,
+            quantity=1
         )
         cart_details.save()
 
