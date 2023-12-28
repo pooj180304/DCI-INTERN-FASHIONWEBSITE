@@ -156,29 +156,29 @@
 
     <nav>
         <div class="dropdown">
-            <button class="dropbtn">Men</button>
+            <button class="dropbtn"><a href="#">Men</a></button>
             <div class="nav-content">
-                <a href="#">Formals</a>
-                <a href="#">Casuals</a>
-                <a href="#">Underwear</a>
+                {% for subcategory in men_subcategories %}
+                <a href="{% url 'product_categories' subcategory=subcategory %}" style="color: #ddd;">{{ subcategory }}</a>
+                {% endfor %}
             </div>
         </div>
 
         <div class="dropdown">
-            <button class="dropbtn">Women</button>
+            <button class="dropbtn"><a href="#">Women</a></button>
             <div class="nav-content">
-                <a href="#">Ethnic</a>
-                <a href="#">Partywear</a>
-                <a href="#">Casuals</a>
+                {% for subcategory in women_subcategories %}
+                <a href="{% url 'product_categories' subcategory=subcategory %}" style="color: #ddd;">{{ subcategory }}</a>
+                {% endfor %}
             </div>
         </div>
 
         <div class="dropdown">
-            <button class="dropbtn">Kids</button>
+            <button class="dropbtn"><a href="#">Kids</a></button>
             <div class="nav-content">
-                <a href="#">Girls</a>
-                <a href="#">Boys</a>
-                <a href="#">Toddler</a>
+                {% for subcategory in kids_subcategories %}
+                <a href="{% url 'product_categories' subcategory=subcategory %}" style="color: #ddd;">{{ subcategory }}</a>
+                {% endfor %}
             </div>
         </div>
 
@@ -207,6 +207,5 @@
             </div>
         </div>
     {% endfor %}
-
 </body>
 </html>
