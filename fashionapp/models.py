@@ -50,6 +50,7 @@ class ProductReviews(models.Model):
 class UserCart(models.Model):
     cart_userid = models.IntegerField()
     cart_product=models.IntegerField()
+    quantity = models.IntegerField(default=1)
     
 
 
