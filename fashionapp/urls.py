@@ -19,6 +19,7 @@ urlpatterns = [
     path('edit_product/<int:product_id>/', views.edit_product, name='edit_product'),
     path('place_orderdetails/<int:customer_id>/<int:product_id>/',views.place_orderdetails,name="place_orderdetails"),
     path('delete_product/<int:product_id>/', views.delete_product, name='delete_product'),
-
-    path('customer_profile/<int:customer_id>/', views.customer_profile, name='customer_profile')
+    path('landingpage/', views.landing_page_view, name='landing_page_view'),
+    path('customer_profile/<int:customer_id>/', views.customer_profile, name='customer_profile'),
+    path('products/<str:subcategory>/', views.product_categories_view, name='product_categories'),
 ]
