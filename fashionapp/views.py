@@ -259,23 +259,35 @@ def delete_product(request, product_id):
     return HttpResponse("Item deleted")
     
 from django.shortcuts import render
+import plotly.offline as opy
+import plotly.express as px
 import pandas as pd
 
 def visualize(request):
-    # Assuming you have already read the CSV file into a DataFrame
-    import pandas as pd
-    df = pd.read_csv("salesdata.csv", dtype={"23": str}, low_memory=False)
+    try:
+        # Assuming you have already read the CSV file into a DataFrame
+        df = pd.read_csv("./fashionapp/salesdata.csv", dtype={"23": str}, low_memory=False)
 
-    # Drop the column "Unnamed: 22"
-    df = df.drop("Unnamed: 22", axis=1, errors="ignore")
+        # Drop the column "Unnamed: 22"
+        df = df.drop("Unnamed: 22", axis=1, errors="ignore")
 
-    # Convert the DataFrame to an HTML table
-    html_table = df.to_html(classes="table table-striped")
+        # Select the top 10 rows of the DataFrame
+        df_top_10 = df.head(10)
 
-    # Pass the HTML table to the template context
-    context = {'html_table': html_table}
+        # Create a simple bar chart using Plotly
+        fig = px.bar(df_top_10, x='index', y='Amount', title='Top 10 Sales Amounts')
 
-    return render(request, 'visualize.html', context)
+        # Convert the figure to HTML
+        plot_html = opy.plot(fig, auto_open=False, output_type='div')
+
+        return render(request, 'visualize.html', {'plot_html': plot_html, 'error_message': None})
+
+    except Exception as e:
+        # Handle the exception, you might want to log it or provide an error message
+        error_message = f"Error: {str(e)}"
+        return render(request, 'visualize.html', {'plot_html': None, 'error_message': error_message})
+
+
 
 def customer_profile(request, customer_id):
     try:
