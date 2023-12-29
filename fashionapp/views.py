@@ -85,7 +85,7 @@ def user_login(req):
                     'women_subcategories': women_subcategories,
                     'kids_subcategories': kids_subcategories,
                     'customer': user,
-                    'products': products,
+                    'products': products
                 }
                 
                 return render(req, 'customer_homepage.html', context)
@@ -144,13 +144,19 @@ def view_orders(request,vendorid):
     return render(request, 'vieworders.html',{'orders':orderitems})
 
 def order_update(req,ordid):
-    orderitems = OrderDetails.objects.get(product_ordered_id=ordid)
-    if req.method=='POST':
+    orderitems = OrderDetails.objects.filter(product_ordered_id=ordid)
+
+    if req.method == 'POST':
         status = req.POST.get('status')
-        orderitems.status = status
-        orderitems.save()
-        return render(req,'vieworders.html',{'orders':[orderitems]})
-    return render(req,'status_update.html',{'orders':[orderitems]})
+
+        # Iterate over the queryset and update each object
+        for orderitem in orderitems:
+            orderitem.status = status
+            orderitem.save()
+
+        return render(req, 'vieworders.html', {'orders': orderitems})
+
+    return render(req, 'status_update.html', {'orders': orderitems})
 
 def display_product(request , vendorid):
     products = ProductDetails.objects.filter(product_vendor=vendorid).values()
@@ -281,8 +287,21 @@ def create_order(product, customer, quantity, payment_type, address):
         return False
 
 def confirm_order(request,customer_id):
-    confirm = OrderDetails.objects.filter(cust_id_id=customer_id)
-    return render(request,"confirm_order.html",{"confirm_product":confirm})
+    orders = OrderDetails.objects.filter(cust_id_id = customer_id)
+    product_details_list = []
+
+    # Loop through each order and get the associated product details
+    for order in orders:
+        product = ProductDetails.objects.get(product_id=order.product_ordered_id)
+        product_details_list.append({
+            'order': order,
+            'product': product,
+        })
+
+    # Retrieve the order details for the given product
+    # confirm = OrderDetails.objects.filter(product_ordered_id=product.product_id)
+
+    return render(request, "confirm_order.html", {"product": product_details_list})
     
 
 def delete_product(request, product_id):
