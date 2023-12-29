@@ -309,26 +309,6 @@ def delete_product(request, product_id):
     product.delete()
     return HttpResponse("Item deleted")
     
-from django.shortcuts import render
-import plotly.offline as opy
-import plotly.express as px
-import pandas as pd
-
-def visualize(request):
-    try:
-        df = pd.read_csv("./fashionapp/salesdata.csv", dtype={"23": str}, low_memory=False)
-        df = df.drop("Unnamed: 22", axis=1, errors="ignore")
-        df_top_10 = df.head(10)
-        fig = px.bar(df_top_10, x='index', y='Amount', title='Top 10 Sales Amounts')
-        plot_html = opy.plot(fig, auto_open=False, output_type='div')
-        return render(request, 'visualize.html', {'plot_html': plot_html, 'error_message': None})
-
-    except Exception as e:
-        error_message = f"Error: {str(e)}"
-        return render(request, 'visualize.html', {'plot_html': None, 'error_message': error_message})
-
-
-
 def customer_profile(request, customer_id):
     try:
         customer_details = UserProfile.objects.get(id=customer_id)
@@ -340,3 +320,45 @@ def customer_profile(request, customer_id):
 def landing_page_view(request):
     return render(request, 'landingpage.html')
 
+from django.shortcuts import render
+import pandas as pd
+import plotly.express as px
+from plotly.offline import plot  # Import the plot function
+import plotly.io as pio
+
+def visualize(request, vendor_id):
+    # Load the dataset
+    df = pd.read_csv("./fashionapp/product_dataset_with_order_details.csv")
+
+    # Function to filter data for a specific vendor
+    def filter_data_by_vendor(vendor_id):
+        return df[df['product_vendor'] == vendor_id]
+
+    # Convert vendor_id to integer (if needed)
+    vendor_id = int(vendor_id)
+
+    # Filter data for the input vendor
+    vendor_data = filter_data_by_vendor(vendor_id)
+
+    # Create Plotly figures
+    fig1 = px.bar(vendor_data, x='product_name', y='cost', title=f'Sales Performance for Vendor {vendor_id}', labels={'cost': 'Sales (in $)'}, text='cost', height=400)
+    fig1.update_traces(texttemplate='%{text:.2s}', textposition='outside')
+    fig1.update_layout(xaxis_tickangle=-45, xaxis_title='Product Name', yaxis_title='Sales (in $)')
+    plot_div1 = plot(fig1, output_type='div', include_plotlyjs=False)
+
+    fig2 = px.line(vendor_data.groupby('month')['cost'].sum().reset_index(), x='month', y='cost', title=f'Monthly Sales Trend for Vendor {vendor_id}', labels={'cost': 'Total Sales (in $)'}, markers=True, line_shape='linear')
+    fig2_div = plot(fig2, output_type='div', include_plotlyjs=False)
+
+    fig3 = px.pie(vendor_data['order_status'].value_counts(), names=vendor_data['order_status'].value_counts().index, title=f'Order Status Distribution for Vendor {vendor_id}', labels={'label': 'Order Status'}, hole=0.3)
+    fig3_div = plot(fig3, output_type='div', include_plotlyjs=False)
+
+    fig4 = px.bar(vendor_data, x='category', y='cost', title=f'Category-wise Sales for Vendor {vendor_id}', labels={'cost': 'Sales (in $)', 'category': 'Category'}, text='cost', height=400)
+    fig4.update_traces(texttemplate='%{text:.2s}', textposition='outside')
+    fig4_div = plot(fig4, output_type='div', include_plotlyjs=False)
+
+    fig5_modified = px.bar(vendor_data.groupby(['month', 'delivery_address'])['cost'].sum().reset_index(), x='month', y='cost', color='delivery_address', title=f'Monthly State-wise Revenue for Vendor {vendor_id}', text='cost', height=400)
+    fig5_modified.update_traces(texttemplate='%{text:.2s}', textposition='outside')
+    fig5_modified_div = plot(fig5_modified, output_type='div', include_plotlyjs=False)
+
+    # Pass the HTML strings to the template along with vendor_id
+    return render(request, 'visualize.html', {'vendor_id': vendor_id, 'plot_div1': plot_div1, 'fig2_div': fig2_div, 'fig3_div': fig3_div, 'fig4_div': fig4_div, 'fig5_modified_div': fig5_modified_div})

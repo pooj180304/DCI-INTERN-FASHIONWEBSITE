@@ -41,7 +41,7 @@
         <a href="{% url 'add_product' vendor.id  %}">Add Product</a>
         <a href="{% url 'view_orders' vend.id %}">View Orders</a>
         <a href="{% url 'display_product' vendor.id  %}">Display Products</a>
-        <a href="{% url 'visualize'  %}">Evaluate myself</a>
+        <a href="{% url 'visualize' vendor.id %}">Evaluate myself</a>
         <a href="{% url 'vendor_profile' vendor.id  %}">View Profile</a>
     </nav>
         <h1>HELLO {{vendor.id}}</h1>
