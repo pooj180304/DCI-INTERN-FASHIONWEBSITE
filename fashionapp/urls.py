@@ -24,9 +24,5 @@ urlpatterns = [
     path('products/<str:subcategory>/<int:customer_id>/', views.product_categories_view, name='product_categories'),
     path('products/<str:subcategory>/', views.product_categories_view, name='product_categories'),
     path('confirm_order/<int:customer_id>/', views.confirm_order , name="confirm_order"),
-<<<<<<< HEAD
-    path('order_update/<int:ordid>/', views.order_update, name='order_update')
-=======
     path('order_update/<int:ordid>/', views.order_update, name='order_update'),
->>>>>>> 9f5c4a44dc98770eadb6e2377e275f2f6e2da419
 ]
