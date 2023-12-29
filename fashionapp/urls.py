@@ -23,9 +23,6 @@ urlpatterns = [
     path('customer_profile/<int:customer_id>/', views.customer_profile, name='customer_profile'),
     path('products/<str:subcategory>/<int:customer_id>/', views.product_categories_view, name='product_categories'),
     path('products/<str:subcategory>/', views.product_categories_view, name='product_categories'),
-<<<<<<< HEAD
-    path('confirm_order/<int:customer_id>/', views.confirm_order , name="confirm_order")
-=======
-    path('order_update/<int:ordid>/', views.order_update, name='order_update'),
->>>>>>> fa8c0a1af1cf63981497895500b38743de4a321d
+    path('confirm_order/<int:customer_id>/', views.confirm_order , name="confirm_order"),
+    path('order_update/<int:ordid>/', views.order_update, name='order_update')
 ]
