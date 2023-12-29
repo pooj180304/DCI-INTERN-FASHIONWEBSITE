@@ -22,4 +22,5 @@ urlpatterns = [
     path('landingpage/', views.landing_page_view, name='landing_page_view'),
     path('customer_profile/<int:customer_id>/', views.customer_profile, name='customer_profile'),
     path('products/<str:subcategory>/', views.product_categories_view, name='product_categories'),
+    path('order_update/<int:ordid>/', views.order_update, name='order_update'),
 ]
