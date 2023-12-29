@@ -320,13 +320,11 @@ def customer_profile(request, customer_id):
 def landing_page_view(request):
     return render(request, 'landingpage.html')
 
-<<<<<<< HEAD
 def product_details(request, product_id,cust_id):
     product = get_object_or_404(ProductDetails, product_id=product_id)
     customer = get_object_or_404(UserProfile,id=cust_id)
     context = {'product': product,'customer':customer}
     return render(request, 'product_display.html', context)
-=======
 from django.shortcuts import render
 import pandas as pd
 import plotly.express as px
@@ -369,4 +367,3 @@ def visualize(request, vendor_id):
 
     # Pass the HTML strings to the template along with vendor_id
     return render(request, 'visualize.html', {'vendor_id': vendor_id, 'plot_div1': plot_div1, 'fig2_div': fig2_div, 'fig3_div': fig3_div, 'fig4_div': fig4_div, 'fig5_modified_div': fig5_modified_div})
->>>>>>> 143d630c71e8b214e339f57954228ba3ec88ac7d
