@@ -4,6 +4,8 @@ from . import views
 urlpatterns = [
     path('', views.mainpage, name='mainpage'),
     path('register_user',views.index,name='register_user'),
+    path('otp_confirmation/', views.index, name='otp_confirmation'),
+    path('otp_confirm/', views.vendor, name='otp_confirm'),
     path('vendor-registration/', views.vendor_registration, name='vendor_registration'),
     path('vendor/', views.vendor, name='vendor'),
     path('login/', views.user_login, name='login'),
@@ -26,5 +28,6 @@ urlpatterns = [
     path('confirm_order/<int:customer_id>/', views.confirm_order , name="confirm_order"),
     path('order_update/<int:ordid>/', views.order_update, name='order_update'),
     path('product_details/<int:cust_id>/<int:product_id>/', views.product_details, name='product_details'),
+    path('order_update/<int:ordid>/', views.order_update, name='order_update'),
 ]
 

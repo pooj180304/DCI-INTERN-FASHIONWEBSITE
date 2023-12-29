@@ -2,42 +2,128 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from fashionapp.models import UserProfile, VendorDetails, OrderDetails, ProductDetails, ProductReviews , UserCart
 from django.contrib.auth.models import User
+from django.utils.crypto import get_random_string
+from django.core.mail import send_mail
+import random
 
 def mainpage(req):
     return render(req,'landingpage.html')
 
-def index(req):
-    if req.method == 'POST':
-        name = req.POST.get('name')
-        email = req.POST.get('email')
-        password1 = req.POST.get('password')
-        password2 = req.POST.get('confirmPassword')
-        mobile = req.POST.get('mobilenumber')
+def index(request):
+    if request.method == 'POST' and 'otp' not in request.POST:
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        password1 = request.POST.get('password')
+        password2 = request.POST.get('confirmPassword')
+        mobile = request.POST.get('mobilenumber')
         user_type = 'Customer'
+
         if password1 == password2:
-            UserProfile.objects.create(name=name,email=email,password=password1,mobile_number=mobile,type=user_type)
-            success_message = "Registration successful!"
-            return render(req, 'login_user.html')
+            generated_otp = str(random.randint(100000, 999999))
+            send_otp_email(email, generated_otp)
+
+            request.session['registration_data'] = {
+                'name': name,
+                'email': email,
+                'password': password1,
+                'mobile_number': mobile,
+                'user_type': user_type
+            }
+            request.session['otp'] = generated_otp
+
+            return render(request, 'register_user.html', {'show_otp_input': True})
         else:
             err_msg = "Passwords do not match"
-            return render(req, 'register_user.html', {'er_msg': err_msg})
-    return render(req, 'register_user.html')
+            return render(request, 'register_user.html', {'er_msg': err_msg})
+
+    elif request.method == 'POST' and 'otp' in request.POST:
+        entered_otp = request.POST.get('otp')
+        saved_otp = request.session.get('otp')
+
+        if entered_otp == saved_otp:
+            registration_data = request.session.get('registration_data')
+            name = registration_data['name']
+            email = registration_data['email']
+            password = registration_data['password']
+            mobile_number = registration_data['mobile_number']
+            user_type = registration_data['user_type']
+
+            UserProfile.objects.create(name=name, email=email, password=password, mobile_number=mobile_number, type=user_type)
+            
+            del request.session['registration_data']
+            del request.session['otp']
+
+            success_message = "Registration successful!"
+            return render(request, 'login_user.html')
+        else:
+            err_msg = "Invalid OTP. Please try again."
+            return render(request, 'register_user.html', {'er_msg': err_msg, 'show_otp_input': True})
+
+    return render(request, 'register_user.html')
+
+def send_otp_email(email, otp):
+    subject = 'OTP Confirmation'
+    message = f'Your OTP is: {otp}'
+    from_email = 'nigithaa29@gmail.com' 
+
+    try:
+        send_mail(subject, message, from_email, [email])
+        print("Email sent successfully")  
+    except Exception as e:
+        print(f"Error sending email: {e}")
 
 def vendor(req):
-    if req.method == 'POST':
+    if req.method == 'POST' and 'otp' not in req.POST:
         name = req.POST.get('name')
         email = req.POST.get('email')
         password1 = req.POST.get('password')
         password2 = req.POST.get('confirmPassword')
         mobile = req.POST.get('mobilenumber')
         user_type = 'Vendor'
+
         if password1 == password2:
-            user_profile = UserProfile.objects.create(name=name,email=email,password=password1,mobile_number=mobile,type=user_type)
-            return render(req, 'vendor_registration.html', {'user_id': user_profile.id})
+            generated_otp = str(random.randint(100000, 999999))
+            send_otp_email(email, generated_otp)
+
+            req.session['registration_data'] = {
+                'name': name,
+                'email': email,
+                'password': password1,
+                'mobile_number': mobile,
+                'user_type': user_type
+            }
+            req.session['otp'] = generated_otp
+
+            return render(req, 'register_vendor.html', {'show_otp_input': True})
         else:
             err_msg = "Passwords do not match"
             return render(req, 'register_vendor.html', {'er_msg': err_msg})
+
+    elif req.method == 'POST' and 'otp' in req.POST:
+        entered_otp = req.POST.get('otp')
+        saved_otp = req.session.get('otp')
+
+        if entered_otp == saved_otp:
+            registration_data = req.session.get('registration_data')
+            name = registration_data['name']
+            email = registration_data['email']
+            password = registration_data['password']
+            mobile_number = registration_data['mobile_number']
+            user_type = registration_data['user_type']
+
+            UserProfile.objects.create(name=name, email=email, password=password, mobile_number=mobile_number, type=user_type)
+            
+            del req.session['registration_data']
+            del req.session['otp']
+
+            success_message = "Registration successful!"
+            return render(req, 'vendor_registration.html')
+        else:
+            err_msg = "Invalid OTP. Please try again."
+            return render(req, 'register_vendor.html', {'er_msg': err_msg, 'show_otp_input': True})
+
     return render(req, 'register_vendor.html')
+
 
 def vendor_registration(request):
     er_msg = None
@@ -328,7 +414,7 @@ def product_details(request, product_id,cust_id):
 from django.shortcuts import render
 import pandas as pd
 import plotly.express as px
-from plotly.offline import plot  # Import the plot function
+from plotly.offline import plot  
 import plotly.io as pio
 
 def visualize(request, vendor_id):
