@@ -22,6 +22,15 @@
         <button type="submit">Register</button>
     </form>
     <p>If business Account click here<a href="{% url 'vendor' %}">Register Here</a></p>
+
+    {% if show_otp_input %}
+    <form method="post" action="{% url 'otp_confirmation' %}">
+        {% csrf_token %}
+        <label for="otp">Enter OTP:</label>
+        <input type="text" name="otp" required>
+        <input type="submit" value="Confirm OTP">
+    </form>
+    {% endif %}
+
 </body>
 </html>
-

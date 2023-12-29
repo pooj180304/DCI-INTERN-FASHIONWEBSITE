@@ -27,6 +27,16 @@
         <input type="tel" id="mobilenumber" name="mobilenumber" required>
         <button type="submit">Register</button>
     </form>
+
+    {% if show_otp_input %}
+    <form method="post" action="{% url 'otp_confirm' %}">
+        {% csrf_token %}
+        <label for="otp">Enter OTP:</label>
+        <input type="text" name="otp" required>
+        <input type="submit" value="Confirm OTP">
+    </form>
+    {% endif %}
+
 </body>
 </html>
 

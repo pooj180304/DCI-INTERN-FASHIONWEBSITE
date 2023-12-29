@@ -26,7 +26,7 @@ SECRET_KEY = "django-insecure-t@-pdix(kr4s6+4oky-tes96z3e#k209wuj#v^d2ajp-4+juz6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -85,6 +85,16 @@ DATABASES = {
         'PORT':'3306'
         }
 }
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
+SESSION_COOKIE_AGE = 24 * 60 * 60
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'nigithaa29@gmail.com'
+EMAIL_HOST_PASSWORD = 'yahu pydi hvgq lddn'
 
 
 # Password validation
