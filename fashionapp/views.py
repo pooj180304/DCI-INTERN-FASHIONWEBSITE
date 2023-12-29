@@ -328,7 +328,7 @@ def product_details(request, product_id,cust_id):
 from django.shortcuts import render
 import pandas as pd
 import plotly.express as px
-from plotly.offline import plot  # Import the plot function
+from plotly.offline import plot  
 import plotly.io as pio
 
 def visualize(request, vendor_id):
