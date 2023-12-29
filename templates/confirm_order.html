@@ -88,17 +88,18 @@
 <body>
     <nav>
     </nav>
-
-    
-    {% for product in confirm_product %}
+    {%for i in product%}
     <div class="product-container">
-        <img class="product-image" src="./media/{{ product.images }}" alt="{{ product.product_name }}">
+        <img class="product-image" src="{{ i.product.images.url }}" alt="{{ i.product.product_name }}">
         <div class="product-details">
-            <p>Product Name: {{ product.product_name }}</p>
-            <p>Availability: {{ product.availability }}</p>
-            <p>Cost: ${{ product.cost }}</p>
+            <p>Product Name: {{ i.product.product_name }}</p>
+            <p>Cost: ${{ i.order.cost }}</p>
+            <p>Quantity: {{ i.order.quantity }}</p>
+            <p>Payment Details: {{ i.order.payment_details }}</p>
+            <p>Status: {{i.order.status}} </p>
         </div>
     </div>
-    {% endfor %}
+    {% endfor%}
+    
 </body>
 </html>
