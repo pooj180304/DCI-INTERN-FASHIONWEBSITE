@@ -5,6 +5,11 @@ from django.contrib.auth.models import User
 from django.utils.crypto import get_random_string
 from django.core.mail import send_mail
 import random
+import pandas as pd
+import plotly.express as px
+from plotly.offline import plot  
+import plotly.io as pio
+from django.db.models import Avg
 
 def mainpage(req):
     return render(req,'landingpage.html')
@@ -409,13 +414,12 @@ def landing_page_view(request):
 def product_details(request, product_id,cust_id):
     product = get_object_or_404(ProductDetails, product_id=product_id)
     customer = get_object_or_404(UserProfile,id=cust_id)
-    context = {'product': product,'customer':customer}
+    reviews = ProductReviews.objects.filter(review_pid_id=product_id)
+    overall_rating = ProductReviews.objects.filter(review_pid=product).aggregate(Avg('ratings'))['ratings__avg']
+    context = {'product': product,'customer':customer,'reviews':reviews,'overall_rating': overall_rating}
     return render(request, 'product_display.html', context)
+
 from django.shortcuts import render
-import pandas as pd
-import plotly.express as px
-from plotly.offline import plot  
-import plotly.io as pio
 
 def visualize(request, vendor_id):
     # Load the dataset
@@ -453,3 +457,12 @@ def visualize(request, vendor_id):
 
     # Pass the HTML strings to the template along with vendor_id
     return render(request, 'visualize.html', {'vendor_id': vendor_id, 'plot_div1': plot_div1, 'fig2_div': fig2_div, 'fig3_div': fig3_div, 'fig4_div': fig4_div, 'fig5_modified_div': fig5_modified_div})
+
+def prod_rev(req, cust_id,prodid):
+    if req.method == 'POST':
+        rev = req.POST.get('review')
+        rate = int(req.POST.get('rating'))
+        product = ProductDetails.objects.get(product_id=prodid)
+        ProductReviews.objects.create(product_review=rev, ratings=rate, review_pid=product)
+        return redirect('product_details', cust_id=cust_id, product_id=prodid)
+    return render(req, 'add_comments.html',{'product':prodid,'customer':cust_id})
