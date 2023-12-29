@@ -273,6 +273,11 @@ def create_order(product, customer, quantity, payment_type, address):
        
         return False
 
+def confirm_order(request,customer_id):
+    confirm = OrderDetails.objects.filter(cust_id_id=customer_id)
+    return render(request,"confirm_order.html",{"confirm_product":confirm})
+    
+
 def delete_product(request, product_id):
     product = UserCart.objects.filter(cart_product=product_id)
     product.delete()
