@@ -98,11 +98,12 @@ def user_login(req):
 
     return render(req, 'login_user.html')
 
-def product_categories_view(request, subcategory):
+def product_categories_view(request, subcategory,customer_id):
     selected_products = ProductDetails.objects.filter(sub_category=subcategory)  
     context = {
         'selected_subcategory': subcategory,
         'selected_products': selected_products,
+        'customer' : customer_id
     }
     return render(request, 'product_categories.html', context)
     
@@ -182,16 +183,12 @@ def add_to_cart(request , customer_id , product_id):
     )
 
     product = get_object_or_404(ProductDetails, product_id=product_id)
-
-    # Check if the item already exists in the cart
     existing_cart_item = UserCart.objects.filter(cart_userid=customer_id, cart_product=product_id).first()
 
     if existing_cart_item:
-        # Update the quantity or take appropriate action
         existing_cart_item.quantity += 1
         existing_cart_item.save()
     else:
-        # Create a new cart item
         cart_details = UserCart(
             cart_userid=customer_id,
             cart_product=product_id,
@@ -285,25 +282,14 @@ import pandas as pd
 
 def visualize(request):
     try:
-        # Assuming you have already read the CSV file into a DataFrame
         df = pd.read_csv("./fashionapp/salesdata.csv", dtype={"23": str}, low_memory=False)
-
-        # Drop the column "Unnamed: 22"
         df = df.drop("Unnamed: 22", axis=1, errors="ignore")
-
-        # Select the top 10 rows of the DataFrame
         df_top_10 = df.head(10)
-
-        # Create a simple bar chart using Plotly
         fig = px.bar(df_top_10, x='index', y='Amount', title='Top 10 Sales Amounts')
-
-        # Convert the figure to HTML
         plot_html = opy.plot(fig, auto_open=False, output_type='div')
-
         return render(request, 'visualize.html', {'plot_html': plot_html, 'error_message': None})
 
     except Exception as e:
-        # Handle the exception, you might want to log it or provide an error message
         error_message = f"Error: {str(e)}"
         return render(request, 'visualize.html', {'plot_html': None, 'error_message': error_message})
 
