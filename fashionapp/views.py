@@ -304,9 +304,8 @@ def landing_page_view(request):
 from django.shortcuts import render
 import pandas as pd
 import plotly.express as px
+from plotly.offline import plot  # Import the plot function
 import plotly.io as pio
-
-
 
 def visualize(request, vendor_id):
     # Load the dataset
