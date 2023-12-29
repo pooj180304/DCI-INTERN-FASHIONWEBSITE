@@ -1,0 +1,28 @@
+<!-- product_details.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Add your head content here if needed -->
+</head>
+<body>
+
+    <h1>Product Details</h1>
+
+    <div>
+        <h2>{{ product.product_name }}</h2>
+        <img class="product-image" src="/media/{{ product.images }}" alt="{{ product.product_name }}">
+        <p>Product ID: {{ product.product_id }}</p>
+        <p>Availability: {{ product.availability }}</p>
+        <p>Size: {{ product.size }}</p>
+        <p>Colours: {{ product.colours }}</p>
+        <p>Description: {{ product.description }}</p>
+        <p>Cost: ${{ product.cost }}</p>
+        <p>Category: {{ product.category }}</p>
+        <p>Sub Category: {{ product.sub_category }}</p>
+        <p>Product Vendor: {{ product.product_vendor }}</p>
+        <button><a href="{% url 'add_tocart' customer.id product.product_id %}">Add to cart</a></button>
+        <button><a href="{% url 'place_orderdetails' customer.id product.product_id  %}"> Place Order </a></button>
+    </div>
+    
+</body>
+</html>

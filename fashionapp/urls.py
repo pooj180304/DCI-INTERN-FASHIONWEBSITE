@@ -12,7 +12,7 @@ urlpatterns = [
     path('add_product/<int:vendorid>/', views.add_product, name='add_product'),
     path('view_orders/<int:vendorid>/', views.view_orders, name='view_orders'),
     path('display_product/<int:vendorid>/', views.display_product, name='display_product'),
-    path('visualize/', views.visualize, name='visualize'),
+    path('visualize/<int:vendor_id>/<', views.visualize, name='visualize'),
     path('vendor_profile/<int:vendorid>/', views.vendor_profile, name='vendor_profile'),
     path('edit_and_save_vendor_profile/<int:vendorid>/', views.edit_and_save_vendor_profile, name='edit_and_save_vendor_profile'),
     path('store_product/<int:vendorid>/', views.store_product, name='store_product'),
@@ -26,5 +26,11 @@ urlpatterns = [
     path('products/<str:subcategory>/<int:customer_id>/', views.product_categories_view, name='product_categories'),
     path('products/<str:subcategory>/', views.product_categories_view, name='product_categories'),
     path('confirm_order/<int:customer_id>/', views.confirm_order , name="confirm_order"),
+<<<<<<< HEAD
+=======
+    path('order_update/<int:ordid>/', views.order_update, name='order_update'),
+    path('product_details/<int:cust_id>/<int:product_id>/', views.product_details, name='product_details'),
+>>>>>>> 6e2b8d89ec76e9d2c492bbee511b164e82f7e2fb
     path('order_update/<int:ordid>/', views.order_update, name='order_update'),
 ]
+

@@ -183,7 +183,7 @@
         </div>
 
         <a href="{% url 'cart' customer.id  %}">My Cart</a>
-        <a href="{% url 'confirm_order' customer.id %}">My Orders</a>
+        <a href="{% url 'confirm_order' customer_id=customer.id %}">My Order</a>
         <a href="{% url 'customer_profile' customer.id  %}">Profile</a>
     </nav>
 
@@ -193,7 +193,7 @@
             <img class="product-image" src="/media/{{ product.images }}" alt="{{ product.product_name }}">
             <div class="product-details">
                 <h2>Product ID: {{ product.product_id }}</h2>
-                <p>Product Name: {{ product.product_name }}</p>
+                <p>Product Name:<a href="{% url 'product_details' cust_id=customer.id product_id=product.product_id %}">{{ product.product_name }}</a></p>
                 <p>Availability: {{ product.availability }}</p>
                 <p>Size: {{ product.size }}</p>
                 <p>Colours: {{ product.colours }}</p>
