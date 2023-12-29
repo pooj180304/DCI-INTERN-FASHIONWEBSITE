@@ -142,6 +142,15 @@ def view_orders(request,vendorid):
     orderitems = OrderDetails.objects.filter(vend_id_id=vendorid).values()
     return render(request, 'vieworders.html',{'orders':orderitems})
 
+def order_update(req,ordid):
+    orderitems = OrderDetails.objects.get(product_ordered_id=ordid)
+    if req.method=='POST':
+        status = req.POST.get('status')
+        orderitems.status = status
+        orderitems.save()
+        return render(req,'vieworders.html',{'orders':[orderitems]})
+    return render(req,'status_update.html',{'orders':[orderitems]})
+
 def display_product(request , vendorid):
     products = ProductDetails.objects.filter(product_vendor=vendorid).values()
     return render(request, 'displayproduct.html', {'products':products})
@@ -243,7 +252,8 @@ def place_orderdetails(request,customer_id , product_id ):
 
         return HttpResponse("Ordered placed") 
     return render(request,"place_orderdetails.html",{'place_order':product_details,'customer_detail':customer})
-    
+
+
 def create_order(product, customer, quantity, payment_type, address):
     vendor = VendorDetails.objects.get(user_profile__id=product.product_vendor)
 
