@@ -1,34 +1,119 @@
-<!-- visualize.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Data Visualization</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizations for Vendor {{ vendor_id }}</title>
+    <!-- Include jQuery and jQuery UI libraries -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
     <style>
-        table {
-            border-collapse: collapse;
-            width: 100%;
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+            color: #333;
         }
 
-        th, td {
-            border: 1px solid #dddddd;
-            text-align: left;
-            padding: 8px;
+        h2 {
+            color: #007bff;
+            margin-bottom: 15px;
         }
 
-        th {
-            background-color: #f2f2f2;
+        .visualization-container {
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            display: none; /* Initially hide visualization containers */
+        }
+
+        button {
+            margin: 5px;
+            padding: 10px;
+            font-size: 14px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
         }
     </style>
 </head>
 <body>
+    <button id="btn1">Show Sales Performance</button>
+    <button id="btn2">Show Monthly Sales Trend</button>
+    <button id="btn3">Show Order Status Distribution</button>
+    <button id="btn4">Show Category-wise Sales</button>
+    <button id="btn5">Show Monthly State-wise Revenue</button>
 
-    <h1>Data Visualization</h1>
+    <div class="visualization-container" id="viz1">
+        <h2>Sales Performance for Vendor {{ vendor_id }}</h2>
+        {{ plot_div1|safe }}
+    </div>
 
-    {% if error_message %}
-        <p>{{ error_message }}</p>
-    {% else %}
-        {{ plot_html|safe }}
-    {% endif %}
+    <div class="visualization-container" id="viz2">
+        <h2>Monthly Sales Trend for Vendor {{ vendor_id }}</h2>
+        {{ fig2_div|safe }}
+    </div>
 
+    <div class="visualization-container" id="viz3">
+        <h2>Order Status Distribution for Vendor {{ vendor_id }}</h2>
+        {{ fig3_div|safe }}
+    </div>
+
+    <div class="visualization-container" id="viz4">
+        <h2>Category-wise Sales for Vendor {{ vendor_id }}</h2>
+        {{ fig4_div|safe }}
+    </div>
+
+    <div class="visualization-container" id="viz5">
+        <h2>Monthly State-wise Revenue for Vendor {{ vendor_id }}</h2>
+        {{ fig5_modified_div|safe }}
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            // Initialize jQuery UI dialog
+            $(".visualization-container").dialog({
+                autoOpen: false,
+                modal: true,
+                width: 'auto',
+                height: 'auto',
+                show: {
+                    effect: "fade",
+                    duration: 500
+                },
+                hide: {
+                    effect: "fade",
+                    duration: 500
+                }
+            });
+
+            // Add click event handlers for each button
+            $("#btn1").click(function() {
+                $("#viz1").dialog("open");
+            });
+
+            $("#btn2").click(function() {
+                $("#viz2").dialog("open");
+            });
+
+            $("#btn3").click(function() {
+                $("#viz3").dialog("open");
+            });
+
+            $("#btn4").click(function() {
+                $("#viz4").dialog("open");
+            });
+
+            $("#btn5").click(function() {
+                $("#viz5").dialog("open");
+            });
+        });
+    </script>
 </body>
 </html>
