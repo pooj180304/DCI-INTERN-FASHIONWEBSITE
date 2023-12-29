@@ -159,7 +159,7 @@
             <button class="dropbtn"><a href="#">Men</a></button>
             <div class="nav-content">
                 {% for subcategory in men_subcategories %}
-                <a href="{% url 'product_categories' subcategory=subcategory %}" style="color: #ddd;">{{ subcategory }}</a>
+                <a href="{% url 'product_categories' subcategory=subcategory customer_id=customer.id %}" style="color: #ddd;">{{ subcategory }}</a>
                 {% endfor %}
             </div>
         </div>
@@ -168,7 +168,7 @@
             <button class="dropbtn"><a href="#">Women</a></button>
             <div class="nav-content">
                 {% for subcategory in women_subcategories %}
-                <a href="{% url 'product_categories' subcategory=subcategory %}" style="color: #ddd;">{{ subcategory }}</a>
+                <a href="{% url 'product_categories' subcategory=subcategory customer_id=customer.id %}" style="color: #ddd;">{{ subcategory }}</a>
                 {% endfor %}
             </div>
         </div>
@@ -177,7 +177,7 @@
             <button class="dropbtn"><a href="#">Kids</a></button>
             <div class="nav-content">
                 {% for subcategory in kids_subcategories %}
-                <a href="{% url 'product_categories' subcategory=subcategory %}" style="color: #ddd;">{{ subcategory }}</a>
+                <a href="{% url 'product_categories' subcategory=subcategory customer_id=customer.id %}" style="color: #ddd;">{{ subcategory }}</a>
                 {% endfor %}
             </div>
         </div>
