@@ -295,10 +295,7 @@ import pandas as pd
 import plotly.express as px
 import plotly.io as pio
 
-from django.shortcuts import render
-import pandas as pd
-import plotly.express as px
-from plotly.offline import plot
+
 
 def visualize(request, vendor_id):
     # Load the dataset
