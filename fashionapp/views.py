@@ -321,3 +321,8 @@ def customer_profile(request, customer_id):
 def landing_page_view(request):
     return render(request, 'landingpage.html')
 
+def product_details(request, product_id,cust_id):
+    product = get_object_or_404(ProductDetails, product_id=product_id)
+    customer = get_object_or_404(UserProfile,id=cust_id)
+    context = {'product': product,'customer':customer}
+    return render(request, 'product_display.html', context)
