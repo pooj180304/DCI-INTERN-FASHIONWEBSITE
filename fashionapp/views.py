@@ -290,29 +290,6 @@ def delete_product(request, product_id):
     product.delete()
     return HttpResponse("Item deleted")
     
-<<<<<<< HEAD
-=======
-from django.shortcuts import render
-import plotly.offline as opy
-import plotly.express as px
-import pandas as pd
-
-def visualize(request):
-    try:
-        df = pd.read_csv("./fashionapp/salesdata.csv", dtype={"23": str}, low_memory=False)
-        df = df.drop("Unnamed: 22", axis=1, errors="ignore")
-        df_top_10 = df.head(10)
-        fig = px.bar(df_top_10, x='index', y='Amount', title='Top 10 Sales Amounts')
-        plot_html = opy.plot(fig, auto_open=False, output_type='div')
-        return render(request, 'visualize.html', {'plot_html': plot_html, 'error_message': None})
-
-    except Exception as e:
-        error_message = f"Error: {str(e)}"
-        return render(request, 'visualize.html', {'plot_html': None, 'error_message': error_message})
-
-
->>>>>>> 571093486b23aeafe2e541fb8767e8d74dccafdd
-
 def customer_profile(request, customer_id):
     try:
         customer_details = UserProfile.objects.get(id=customer_id)
