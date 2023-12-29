@@ -193,7 +193,7 @@
             <img class="product-image" src="/media/{{ product.images }}" alt="{{ product.product_name }}">
             <div class="product-details">
                 <h2>Product ID: {{ product.product_id }}</h2>
-                <p>Product Name: {{ product.product_name }}</p>
+                <p>Product Name:<a href="{% url 'product_details' cust_id=customer.id product_id=product.product_id %}">{{ product.product_name }}</a></p>
                 <p>Availability: {{ product.availability }}</p>
                 <p>Size: {{ product.size }}</p>
                 <p>Colours: {{ product.colours }}</p>
