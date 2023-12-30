@@ -1,42 +1,97 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VENDOR REGISTRATION</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'fashionapp/vendorregstyles.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <title>Vendor Registration</title>
 </head>
 <body>
-    {% if er_msg %}
-        <p style="color: red;">{{ er_msg }}</p>
-    {% endif %}
+<div class="blur">
+        <div class="container d-flex align-items-start justify-content-between login-container" id="loginContainer" style="display: none;">
+        <div class="col-md-6 imgclass">
+            <img src="{% static 'images/vendorreg.jpeg' %}" class="img-fluid" alt="Image">
+        </div>
+        <div class="col-md-6 login-cont">
+            <i class="fas fa-times close-icon" ></i>
+            <form method="post" action="{% url 'vendor' %}">
+                {% csrf_token %}
+                <h2>Join the success family!</h2>
+                <hr class="line">
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Name*" style="width: 349px;
+                    height: 49px;
+                    top: 378px;
+                    left: 775px;
+                    border: 2px solid #000;
+                    border-radius: 5px;" required>
+                </div>
+                <div class="mb-3">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email*" style="width: 349px;
+                    height: 49px;
+                    top: 378px;
+                    left: 775px;
+                    border: 2px solid #000;
+                    border-radius: 5px;" required>
+                </div>
+                <div class="mb-3">
+                    <input type="tel" class="form-control" id="mobilenumber" name="mobilenumber" placeholder="Phone Number*" style="width: 349px;
+                    height: 49px;
+                    top: 378px;
+                    left: 775px;
+                    border: 2px solid #000;
+                    border-radius: 5px;" required>
+                </div>
+                <div class="mb-3">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Set Password*" style="width: 349px;
+                    height: 49px;
+                    top: 378px;
+                    left: 775px;
+                    border: 2px solid #000;
+                    border-radius: 5px;" required>
+                </div>
+                <div class="mb-3">
+                    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password*" style="width: 349px;
+                    height: 49px;
+                    top: 378px;
+                    left: 775px;
+                    border: 2px solid #000;
+                    border-radius: 5px;" required>
+                </div>
+                <p style="color: red;">{{ er_msg }}</p>
+                <button type="submit" class="rounded-button">REGISTER</button>
+            </form>
+            <br>
+            {% if show_otp_input %}
+            <form method="post" action="{% url 'otp_confirm' %}">
+                {% csrf_token %}
+                <h5>Enter OTP:</h5>
+                <hr class="line">
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="otp" name="otp" placeholder="Enter OTP*" style="width: 349px;
+                    height: 49px;
+                    top: 378px;
+                    left: 775px;
+                    border: 2px solid #000;
+                    border-radius: 5px;" required>
+                </div>
+                <input type="submit" class="rounded-button" value="Confirm OTP">
+            </form>
+            {% endif %}
+        </div>
+    </div>
+</div>
 
-    {% if success_message %}
-        <p style="color: green;">{{ success_message }}</p>
-    {% endif %}
-    <form method="post" action="{% url 'vendor' %}">
-        {% csrf_token %}
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-        <label for="confirmPassword">Confirm Password:</label>
-        <input type="password" id="confirmPassword" name="confirmPassword" required>
-        <label for="mobilenumber">Mobile Number:</label>
-        <input type="tel" id="mobilenumber" name="mobilenumber" required>
-        <button type="submit">Register</button>
-    </form>
-
-    {% if show_otp_input %}
-    <form method="post" action="{% url 'otp_confirm' %}">
-        {% csrf_token %}
-        <label for="otp">Enter OTP:</label>
-        <input type="text" name="otp" required>
-        <input type="submit" value="Confirm OTP">
-    </form>
-    {% endif %}
-
+    <script>
+        $(document).ready(function () {
+            $(".close-icon").click(function () {
+                window.location.href = "{% url 'landing_page_view' %}";
+            });
+        });
+    </script>
 </body>
 </html>
-
