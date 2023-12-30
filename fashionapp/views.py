@@ -69,7 +69,7 @@ def index(request):
 def send_otp_email(email, otp):
     subject = 'OTP Confirmation'
     message = f'Your OTP is: {otp}'
-    from_email = 'nigithaa29@gmail.com' 
+    from_email = 'minimalsfashion@gmail.com' 
 
     try:
         send_mail(subject, message, from_email, [email])
