@@ -1,12 +1,48 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>landing page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'fashionapp/styles.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+    <title>Index</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
-    <button><a href="{% url 'login' %}">Login</a></button>
-    <button><a href="{% url 'register_user' %}">Sign up</a></button>
+    <header class="header">
+        <a href="#default" class="logo">
+            <img class="logo1" src="{% static 'images/logo-1.png' %}" style="width: 200px; height: auto;" />
+        </a>
+        <div class="header-right">
+            <a href="#contact" class="about">About us <i class="fas fa-info-circle"></i></a>
+            <a href="#contact" class="services">Services <i class="fas fa-cogs"></i></a>
+            <a href="#about" class="help">Help <i class="fas fa-question-circle"></i></a>
+            <a class="log_in" href="{% url 'login' %}">LOG IN</a>
+            <a class="sign_up" href="{% url 'register_user' %}">SIGN UP</a>
+        </div>
+    </header>
+
+    <div class="container custom-container">
+        <!-- Your content goes here -->
+        <h3>About Us</h3>
+        <p>Welcome to MINIMALS – where thoughtful shoppers discover a curated selection of unique designs and top-quality pieces that defy the ordinary. As your Online Clothing Shop, MINIMALS takes pride in constantly curating fresh, trend-setting collections, always on the lookout for that next style revelation our customers will adore.Founded in India in 2023, MINIMALS has become synonymous with more than just fashion; it's a commitment to providing an unmatched online shopping experience. Our dedication to expert service and genuine care sets us apart, making MINIMALS the destination for those who appreciate distinctive style and reliability. Explore the extraordinary at MINIMALS, where fashion is more than just clothing – it's a statement of individuality.</p>
+    </div>
+    <div class="container div-container">
+        <img class="img1" src="{% static 'images/image-1.png' %}" style="display: none;">
+        <img class="img1" src="{% static 'images/image-2.png' %}" style="display: none;">
+        <img class="img1" src="{% static 'images/image-3.png' %}" style="display: none;">
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            // Animation for the images
+            $(".img1").each(function (index) {
+                $(this).delay(1000 * index).fadeIn(1000);
+            });
+        });
+    </script>
 </body>
 </html>
