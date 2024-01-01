@@ -411,12 +411,27 @@ def customer_profile(request, customer_id):
 def landing_page_view(request):
     return render(request, 'landingpage.html')
 
-def product_details(request, product_id,cust_id):
+def product_details(request, product_id, cust_id):
     product = get_object_or_404(ProductDetails, product_id=product_id)
-    customer = get_object_or_404(UserProfile,id=cust_id)
+    customer = get_object_or_404(UserProfile, id=cust_id)
     reviews = ProductReviews.objects.filter(review_pid_id=product_id)
     overall_rating = ProductReviews.objects.filter(review_pid=product).aggregate(Avg('ratings'))['ratings__avg']
-    context = {'product': product,'customer':customer,'reviews':reviews,'overall_rating': overall_rating}
+
+   
+    star_ratings = {}
+    for i in range(1, 6):
+        count = reviews.filter(ratings=i).count()
+        total_reviews = reviews.count()
+        percentage = (count / total_reviews) * 100 if total_reviews > 0 else 0
+        star_ratings[i] = round(percentage, 2)
+
+    context = {
+        'product': product,
+        'customer': customer,
+        'reviews': reviews,
+        'overall_rating': overall_rating,
+        'star_ratings': star_ratings,
+    }
     return render(request, 'product_display.html', context)
 
 from django.shortcuts import render
