@@ -2,7 +2,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Add your head content here if needed -->
+    <style>
+    .bar {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .bar-label {
+        width: 120px;
+        font-weight: bold;
+    }
+
+    .bar-rating {
+        flex-grow: 1;
+        display: flex;
+    }
+
+    .bar-fill {
+        background-color: #4caf50; /* Green color for filled portion */
+        height: 20px;
+        border-radius: 5px;
+    }
+</style>
 </head>
 <body>
 
@@ -22,13 +44,18 @@
         <button><a href="{% url 'add_tocart' customer.id product.product_id %}">Add to cart</a></button>
         <button><a href="{% url 'place_orderdetails' customer.id product.product_id  %}"> Place Order </a></button>
     </div>
-    <p>ratings: {{overall_rating}}</p>
     <button><a href="{% url 'prod_rev' cust_id=customer.id prodid=product.product_id %}">Add review and rate the product</a></button>
-    {% for i in reviews %}
-    <div>
-        <p>{{i.product_review}}</p>
-        <p>{{i.ratings}}</p>
+    
+    <div class="bar-graph">
+        <h2>Overall Ratings</h2>
+        {% for rating, percentage in star_ratings.items %}
+            <div class="bar">
+                <div class="bar-label">{{ rating }} Stars</div>
+                <div class="bar-rating">
+                    <div class="bar-fill" style="width: {{ percentage }}%;"></div>
+                </div>
+            </div>
+        {% endfor %}
     </div>
-    {%endfor%}
 </body>
 </html>
