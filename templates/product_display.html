@@ -127,6 +127,26 @@
                 </div>
             {% endfor %}
         </div>
+        <div class="bar-graph">
+            <h2>All User Ratings and Reviews</h2>
+            {% for review in reviews %}
+                <div class="container">
+                    <div class="bar">
+                        <div class="bar-label">Rating:</div>
+                        <div class="bar-rating">
+                            {% for _ in review.star_range %}
+                                <span class="star-icon">&#9733;</span>
+                            {% endfor %}
+                            {% for _ in review.empty_star_range %}
+                                <span class="star-icon">&#9734;</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <p>{{ review.product_review }}</p>
+                </div>
+            {% endfor %}
+        </div>
+        
     </div>
 </body>
 </html>

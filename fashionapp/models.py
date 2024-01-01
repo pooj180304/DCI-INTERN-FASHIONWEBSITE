@@ -46,6 +46,13 @@ class ProductReviews(models.Model):
     product_review = models.CharField(max_length=255)
     review_pid = models.ForeignKey(ProductDetails, on_delete=models.CASCADE)
     ratings = models.IntegerField()
+    @property
+    def star_range(self):
+        return range(self.ratings)
+
+    @property
+    def empty_star_range(self):
+        return range(5 - self.ratings)
 
 class UserCart(models.Model):
     cart_userid = models.IntegerField()
