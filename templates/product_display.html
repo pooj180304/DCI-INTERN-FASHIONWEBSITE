@@ -11,7 +11,6 @@
     <div>
         <h2>{{ product.product_name }}</h2>
         <img class="product-image" src="/media/{{ product.images }}" alt="{{ product.product_name }}">
-        <p>Product ID: {{ product.product_id }}</p>
         <p>Availability: {{ product.availability }}</p>
         <p>Size: {{ product.size }}</p>
         <p>Colours: {{ product.colours }}</p>
@@ -23,6 +22,13 @@
         <button><a href="{% url 'add_tocart' customer.id product.product_id %}">Add to cart</a></button>
         <button><a href="{% url 'place_orderdetails' customer.id product.product_id  %}"> Place Order </a></button>
     </div>
-    
+    <p>ratings: {{overall_rating}}</p>
+    <button><a href="{% url 'prod_rev' cust_id=customer.id prodid=product.product_id %}">Add review and rate the product</a></button>
+    {% for i in reviews %}
+    <div>
+        <p>{{i.product_review}}</p>
+        <p>{{i.ratings}}</p>
+    </div>
+    {%endfor%}
 </body>
 </html>

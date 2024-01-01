@@ -1,0 +1,104 @@
+body {
+    background-image: url('/static/images/bg.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    margin: 0; 
+    padding: 0; 
+    height: 125vh; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.blur {
+    backdrop-filter: blur(3.5px); 
+    background-color: rgba(255, 255, 255, 0.5); 
+    border-radius: 10px; 
+    padding: 20px;
+    width: 100%;
+    height: 100%;
+}
+.login-container {
+    width: 100%;
+    max-width: 1147px;
+    height: 660px;
+    border-radius: 15px;
+    border: 3px solid #000;
+    margin-top: 1cm;
+    background-color: rgba(255, 192, 217, 0.3);
+    position: relative; 
+    margin-bottom: 1cm;
+}
+
+.imgclass {
+    padding-right: 0; 
+}
+
+.img-fluid {
+    width: 418.16px;
+    height: 654px;
+    top: 226px;
+    left: 252px;
+    border: 1px solid #000;
+    margin-left: 2cm;
+}
+
+.line {
+    width: 344px;
+    top: 338.5px;
+    left: 780px;
+    border: 7px solid #000;
+    background-color: #fff;
+    border-radius: 20px;
+}
+.line1 {
+    width: 470px;
+    top: 300px;
+    left: 780px;
+    border: 7px solid #000;
+    background-color: #000;
+    border-radius: 20px;
+}
+h2 {
+    margin-top: 1cm; 
+}
+
+.login-cont {
+    margin-top: 1cm;
+    position: relative;
+}
+
+.close-icon {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+.btn{
+    margin-top: 5cm;
+}
+.rounded-button {
+    display: inline-block;
+    width: 310px;
+    height: 57px;
+    top: 747px;
+    left: 756px;
+    padding: 10px 20px;
+    font-size: 16px;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 100px;
+    border: 2px solid black;
+    color: black;
+    cursor: pointer;
+    background-color: rgba(215, 93, 141, 1);
+    font-family: 'Crimson Text', serif;
+    font-size: 32px;
+    font-weight: 700;
+    line-height: 42px;
+    letter-spacing: 0em;
+    text-align: center;
+}
+
