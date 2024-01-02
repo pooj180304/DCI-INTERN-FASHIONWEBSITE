@@ -65,24 +65,32 @@
 </head>
 <body>
     <h1>Cart!!</h1>
-    {% for item in cart %}
+    <p>{{cus}}</p>
+    {% for item, c in cart_and_cost %}
     <div class="product-container">
         <div class="product-image">
             <img src="/media/{{ item.images }}" alt="{{ item.product_name }}" width="100">
         </div>
         <div class="product-details">
             <h2>{{ item.product_name }}</h2>
-            <p>Availability: {{ item.availability }}</p>
-            <p>Size: {{ item.size }}</p>
-            <p>Colours: {{ item.colours }}</p>
-            <p>Description: {{ item.description }}</p>
-            <p>Cost: {{ item.cost }}</p>
-            <p>Category: {{ item.category }}</p>
-            <p>Sub-Category: {{ item.sub_category }}</p>
-            <button class="btn btn-danger" ><a href={% url 'delete_product' item.product_id %}>Delete</a></button>
-            
+            <!-- Other details... -->
+            <p>Quantity: {{ c.quantity }}</p>
+            <p>Cost: {{ c.cost }}</p>
+            <form class="update-quantity-form" method="post" action="{% url 'update_quantity' cust_id=cus %}">
+                {% csrf_token %}
+                <input type="hidden" name="product_id" value="{{ item.product_id }}">
+                <label for="quantity">Select Quantity:</label>
+                <select name="quantity" id="quantity">
+                    {% for i in quantity_range %}
+                        <option value="{{ i }}" {% if c.quantity == i %}selected{% endif %}>{{ i }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit">Update Quantity</button>
+            </form>
+            <button class="btn btn-danger"><a href="{% url 'delete_product' item.product_id %}">Delete</a></button>
         </div>
     </div>
-    {% endfor %}
+{% endfor %}
+        <h3 class="text-center mt-4">Total Cost: {{ total_cost }}</h3>
 </body>
 </html>
