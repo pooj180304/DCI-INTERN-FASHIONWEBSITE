@@ -10,6 +10,7 @@ import plotly.express as px
 from plotly.offline import plot  
 import plotly.io as pio
 from django.db.models import Avg
+from django.contrib import messages
 
 def mainpage(req):
     return render(req,'landingpage.html')
@@ -200,10 +201,6 @@ def product_categories_view(request, subcategory,customer_id):
     
 def add_product(request , vendorid):
     return render(request, 'addproduct.html' , { 'id' : vendorid})
-
-def vendor_page(request,vendorid):
-    vend = get_object_or_404(UserProfile, id=vendorid)
-    return render(request,'vendor_page.html',{'vendor':vendorid,'vend':vend})
     
 def store_product(request, vendorid):
     if request.method == 'POST':
@@ -298,6 +295,7 @@ def add_to_cart(request , customer_id , product_id):
     if existing_cart_item:
         existing_cart_item.quantity += 1
         existing_cart_item.save()
+        
     else:
         cart_details = UserCart(
             cart_userid=customer_id,
@@ -348,7 +346,12 @@ def place_orderdetails(request,customer_id , product_id ):
         address = request.POST.get('address')
         create_order(product_details, customer, quantity, payment_type, address)
 
-        return HttpResponse("Ordered placed") 
+        if create_order(product_details, customer, quantity, payment_type, address):
+            messages.success(request, 'Order placed successfully!')
+        else:
+            messages.error(request, 'Failed to place the order. Please check the quantity and try again.')
+
+       
     return render(request,"place_orderdetails.html",{'place_order':product_details,'customer_detail':customer})
 
 
