@@ -39,11 +39,11 @@
           </button>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-              <a class="nav-link active" aria-current="page" href="{% url 'add_product' vendor %}">Add Product</a>
-              <a class="nav-link" href="{% url 'view_orders' vendor %}">View Orders</a>
-              <a class="nav-link" href="{% url 'display_product' vendor  %}">Display Products</a>
-              <a class="nav-link" href="{% url 'visualize' vendor %}">Evaluate myself</a>
-              <a class="nav-link" href="{% url 'vendor_profile' vendor  %}">View Profile</a>
+              <a class="nav-link active" aria-current="page" href="{% url 'add_product' vendor.id %}">Add Product</a>
+              <a class="nav-link" href="{% url 'view_orders' vend.id %}">View Orders</a>
+              <a class="nav-link" href="{% url 'display_product' vendor.id  %}">Display Products</a>
+              <a class="nav-link" href="{% url 'visualize' vendor.id %}">Evaluate myself</a>
+              <a class="nav-link" href="{% url 'vendor_profile' vendor.id  %}">View Profile</a>
             </div>
           </div>
         </div>
