@@ -397,10 +397,14 @@ def confirm_order(request,customer_id):
 
     return render(request, "confirm_order.html", {"product": product_details_list})
     
-def delete_product(request, product_id):
-    product = UserCart.objects.filter(cart_product=product_id)
-    product.delete()
-    return HttpResponse("Item deleted")
+def delete_product(request, customer_id, product_id):
+    if request.user.is_authenticated and request.user.id == customer_id:
+        product = UserCart.objects.filter(cart_product=product_id)
+        product.delete()
+        
+        return redirect('cart', customer_id=customer_id)
+    else:
+        return HttpResponse("Unauthorized access")
     
 def customer_profile(request, customer_id):
     try:
