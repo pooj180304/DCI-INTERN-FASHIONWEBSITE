@@ -201,7 +201,10 @@ def product_categories_view(request, subcategory,customer_id):
 def add_product(request , vendorid):
     return render(request, 'addproduct.html' , { 'id' : vendorid})
 
-
+def vendor_page(request,vendorid):
+    vend = get_object_or_404(UserProfile, id=vendorid)
+    return render(request,'vendor_page.html',{'vendor':vendorid,'vend':vend})
+    
 def store_product(request, vendorid):
     if request.method == 'POST':
         product_name = request.POST.get('product_name')
@@ -250,8 +253,9 @@ def order_update(req,ordid):
     return render(req, 'status_update.html', {'orders': orderitems})
 
 def display_product(request , vendorid):
+    vendorid = vendorid
     products = ProductDetails.objects.filter(product_vendor=vendorid).values()
-    return render(request, 'displayproduct.html', {'products':products})
+    return render(request, 'displayproduct.html', {'products':products,'vendor':vendorid})
 
 def vendor_profile(request, vendorid):
     try:
