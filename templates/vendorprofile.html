@@ -30,6 +30,7 @@
         <p><strong>City:</strong> {{ vendor_details.city }}</p>
         <p><strong>State:</strong> {{ vendor_details.state }}</p>
         <a href="{% url 'edit_and_save_vendor_profile' vendor_details.user_profile_id %}">Edit Profile</a>
+        <a href="{% url 'landing_page_view' %}">Logout</a>
     {% elif error_message %}
         <p style="color: red;">{{ error_message }}</p>
 
