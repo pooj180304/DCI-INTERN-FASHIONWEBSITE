@@ -21,7 +21,7 @@ urlpatterns = [
     path('cart/<int:customer_id>/',views.cart, name='cart'),
     path('edit_product/<int:product_id>/', views.edit_product, name='edit_product'),
     path('place_orderdetails/<int:customer_id>/<int:product_id>/',views.place_orderdetails,name="place_orderdetails"),
-    path('delete_product/<int:product_id>/', views.delete_product, name='delete_product'),
+    path('delete_product/<int:customer_id>/<int:product_id>/', views.delete_product, name='delete_product'),
     path('landingpage/', views.landing_page_view, name='landing_page_view'),
     path('customer_profile/<int:customer_id>/', views.customer_profile, name='customer_profile'),
     path('products/<str:subcategory>/<int:customer_id>/', views.product_categories_view, name='product_categories'),
@@ -31,7 +31,10 @@ urlpatterns = [
     path('product_details/<int:cust_id>/<int:product_id>/', views.product_details, name='product_details'),
     path('order_update/<int:ordid>/', views.order_update, name='order_update'),
     path('prod_rev/<int:cust_id>/<int:prodid>/',views.prod_rev,name="prod_rev"),
+<<<<<<< HEAD
     path('vendor_page/<int:vendorid>/',views.vendor_page,name='vendor_page'),
     path('update_quantity/<int:cust_id>/', views.update_quantity, name='update_quantity'),
+=======
+>>>>>>> 8d7d4c53d175109f7f6d69f6a59fb837d62d20a3
 ]
 
