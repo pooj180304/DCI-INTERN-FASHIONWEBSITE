@@ -343,8 +343,6 @@ def update_quantity(request, cust_id):
     user_cart.save()
 
     return redirect('cart', customer_id=cust_id)
-
-<<<<<<< HEAD
     return render(request , 'cart.html' , {'cart':cart_products , 'user':user})
 
 def delete_product(request, customer_id, product_id):
@@ -352,9 +350,7 @@ def delete_product(request, customer_id, product_id):
     product.delete()
     cart_url = reverse('cart', kwargs={'customer_id': customer_id})
     return redirect(cart_url)
-=======
->>>>>>> 3d1262e0658462a18138c5dab66053f626d54522
-
+    
 def edit_product(request, product_id):
     product_details = get_object_or_404(ProductDetails, product_id=product_id)
 
