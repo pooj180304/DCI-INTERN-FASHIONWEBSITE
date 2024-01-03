@@ -73,7 +73,7 @@
         </div>
         <div class="product-details">
             <h2>{{ item.product_name }}</h2>
-            <!-- Other details... -->
+
             <p>Quantity: {{ c.quantity }}</p>
             <p>Cost: {{ c.cost }}</p>
             <form class="update-quantity-form" method="post" action="{% url 'update_quantity' cust_id=cus %}">
