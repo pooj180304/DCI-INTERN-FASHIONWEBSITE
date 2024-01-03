@@ -73,8 +73,6 @@
         </div>
         <div class="product-details">
             <h2>{{ item.product_name }}</h2>
-<<<<<<< HEAD
-            <!-- Other details... -->
             <p>Quantity: {{ c.quantity }}</p>
             <p>Cost: {{ c.cost }}</p>
             <form class="update-quantity-form" method="post" action="{% url 'update_quantity' cust_id=cus %}">
@@ -88,8 +86,6 @@
                 </select>
                 <button type="submit">Update Quantity</button>
             </form>
-            <button class="btn btn-danger"><a href="{% url 'delete_product' item.product_id %}">Delete</a></button>
-=======
             <p>Availability: {{ item.availability }}</p>
             <p>Size: {{ item.size }}</p>
             <p>Colours: {{ item.colours }}</p>
@@ -97,9 +93,8 @@
             <p>Cost: {{ item.cost }}</p>
             <p>Category: {{ item.category }}</p>
             <p>Sub-Category: {{ item.sub_category }}</p>
-            <button class="btn btn-danger" ><a href={% url 'delete_product' customer_id=user.id product_id=item.product_id %}>Delete</a></button>
+            <button class="btn btn-danger" ><a href={% url 'delete_product' customer_id=cus product_id=item.product_id %}>Delete</a></button>
             
->>>>>>> 8d7d4c53d175109f7f6d69f6a59fb837d62d20a3
         </div>
     </div>
 {% endfor %}

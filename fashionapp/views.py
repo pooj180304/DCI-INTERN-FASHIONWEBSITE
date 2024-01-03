@@ -326,9 +326,7 @@ def cart(request, customer_id):
     cart = UserCart.objects.filter(cart_userid=customer_id).values()
     cart_products = ProductDetails.objects.filter(product_id__in=cart.values_list('cart_product', flat=True))
     user = UserProfile.objects.get(id=customer_id)
-<<<<<<< HEAD
     cus = customer_id
-    # Zip the cart and cost lists in the view
     cart_and_cost = zip(cart_products, cart)
     quantity_range = range(1,7)
     total_cost = sum(item['cost'] for item in cart)
@@ -341,18 +339,13 @@ def update_quantity(request, cust_id):
     user_cart = get_object_or_404(UserCart, cart_product=product_id, cart_userid=cust_id)
     product_details = get_object_or_404(ProductDetails, product_id=product_id)
 
-        # Update the quantity and cost in the database
     user_cart.quantity = quantity
-    user_cart.cost = quantity * product_details.cost  # Assuming you have a 'price' field in ProductDetails
+    user_cart.cost = quantity * product_details.cost  
     user_cart.save()
-    # Update the quantity in your database or session
-    # You need to implement this based on your data structure
 
     return redirect('cart', customer_id=cust_id)
 
-=======
     return render(request , 'cart.html' , {'cart':cart_products , 'user':user})
->>>>>>> 8d7d4c53d175109f7f6d69f6a59fb837d62d20a3
 
 def delete_product(request, customer_id, product_id):
     product = UserCart.objects.filter(cart_product=product_id)
