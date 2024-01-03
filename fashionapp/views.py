@@ -4,6 +4,7 @@ from fashionapp.models import UserProfile, VendorDetails, OrderDetails, ProductD
 from django.contrib.auth.models import User
 from django.utils.crypto import get_random_string
 from django.core.mail import send_mail
+from django.urls import reverse
 import random
 import pandas as pd
 import plotly.express as px
@@ -228,7 +229,7 @@ def store_product(request, vendorid):
         )
 
         product_details.save()
-        return HttpResponse("stored")
+        return redirect('display_product', vendorid=vendorid)
 
 def view_orders(request,vendorid):
     orderitems = OrderDetails.objects.filter(vend_id_id=vendorid).values()
@@ -240,7 +241,6 @@ def order_update(req,ordid):
     if req.method == 'POST':
         status = req.POST.get('status')
 
-        # Iterate over the queryset and update each object
         for orderitem in orderitems:
             orderitem.status = status
             orderitem.save()
@@ -304,14 +304,19 @@ def add_to_cart(request , customer_id , product_id):
         )
         cart_details.save()
 
-    return HttpResponse("stored")
+    return redirect('cart', customer_id=customer_id)
 
 def cart(request , customer_id):
     cart = UserCart.objects.filter(cart_userid=customer_id)
     cart_products = ProductDetails.objects.filter(product_id__in=cart.values_list('cart_product', flat=True))
     user = UserProfile.objects.get(id=customer_id)
-
     return render(request , 'cart.html' , {'cart':cart_products , 'user':user})
+
+def delete_product(request, customer_id, product_id):
+    product = UserCart.objects.filter(cart_product=product_id)
+    product.delete()
+    cart_url = reverse('cart', kwargs={'customer_id': customer_id})
+    return redirect(cart_url)
 
 def edit_product(request, product_id):
     product_details = get_object_or_404(ProductDetails, product_id=product_id)
@@ -352,6 +357,7 @@ def place_orderdetails(request,customer_id , product_id ):
             messages.error(request, 'Failed to place the order. Please check the quantity and try again.')
 
        
+        return redirect('confirm_order', customer_id=customer_id) 
     return render(request,"place_orderdetails.html",{'place_order':product_details,'customer_detail':customer})
 
 
@@ -388,7 +394,6 @@ def confirm_order(request,customer_id):
     orders = OrderDetails.objects.filter(cust_id_id = customer_id)
     product_details_list = []
 
-    # Loop through each order and get the associated product details
     for order in orders:
         product = ProductDetails.objects.get(product_id=order.product_ordered_id)
         product_details_list.append({
@@ -396,17 +401,8 @@ def confirm_order(request,customer_id):
             'product': product,
         })
 
-    # Retrieve the order details for the given product
-    # confirm = OrderDetails.objects.filter(product_ordered_id=product.product_id)
-
     return render(request, "confirm_order.html", {"product": product_details_list})
-    
-
-def delete_product(request, product_id):
-    product = UserCart.objects.filter(cart_product=product_id)
-    product.delete()
-    return HttpResponse("Item deleted")
-    
+        
 def customer_profile(request, customer_id):
     try:
         customer_details = UserProfile.objects.get(id=customer_id)
@@ -444,20 +440,14 @@ def product_details(request, product_id, cust_id):
 from django.shortcuts import render
 
 def visualize(request, vendor_id):
-    # Load the dataset
     df = pd.read_csv("./fashionapp/product_dataset_with_order_details.csv")
 
-    # Function to filter data for a specific vendor
     def filter_data_by_vendor(vendor_id):
         return df[df['product_vendor'] == vendor_id]
 
-    # Convert vendor_id to integer (if needed)
     vendor_id = int(vendor_id)
-
-    # Filter data for the input vendor
     vendor_data = filter_data_by_vendor(vendor_id)
 
-    # Create Plotly figures
     fig1 = px.bar(vendor_data, x='product_name', y='cost', title=f'Sales Performance for Vendor {vendor_id}', labels={'cost': 'Sales (in $)'}, text='cost', height=400)
     fig1.update_traces(texttemplate='%{text:.2s}', textposition='outside')
     fig1.update_layout(xaxis_tickangle=-45, xaxis_title='Product Name', yaxis_title='Sales (in $)')
@@ -477,7 +467,6 @@ def visualize(request, vendor_id):
     fig5_modified.update_traces(texttemplate='%{text:.2s}', textposition='outside')
     fig5_modified_div = plot(fig5_modified, output_type='div', include_plotlyjs=False)
 
-    # Pass the HTML strings to the template along with vendor_id
     return render(request, 'visualize.html', {'vendor_id': vendor_id, 'plot_div1': plot_div1, 'fig2_div': fig2_div, 'fig3_div': fig3_div, 'fig4_div': fig4_div, 'fig5_modified_div': fig5_modified_div})
 
 def prod_rev(req, cust_id,prodid):

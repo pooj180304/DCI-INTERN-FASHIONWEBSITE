@@ -9,7 +9,6 @@
     {% for i in orders %}
     <div>
         <h2>{{ i.product_ordered_id }}</h2>
-        <!-- Other order details here -->
 
         <form method="post" action="{% url 'order_update' ordid=i.product_ordered_id %}">
             {% csrf_token %}
