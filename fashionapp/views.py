@@ -261,6 +261,7 @@ def vendor_profile(request, vendorid):
         return render(request, 'vendor_page.html')  
     return render(request, 'vendorprofile.html', {'vendor_details': vendor_details})
 
+
 def edit_and_save_vendor_profile(request, vendorid):
     vendor_details = get_object_or_404(VendorDetails, user_profile_id=vendorid)
 
@@ -283,6 +284,19 @@ def edit_and_save_vendor_profile(request, vendorid):
 
     return render(request, 'edit_vendor_profile.html', {'vendor_details': vendor_details})
 
+def edit_and_save_customer_profile(request, customerid):
+    user_details = get_object_or_404(UserProfile, id=customerid)
+
+    if request.method == 'POST':
+        user_details.name = request.POST.get('name')
+        user_details.email = request.POST.get('email')
+        user_details.mobile_number = request.POST.get('mobile_number')
+        user_details.save()
+
+        return redirect('customer_profile', customer_id=customerid)
+
+    return render(request, 'edit_customer_profile.html', {'user_details': user_details})
+
 def add_to_cart(request , customer_id , product_id):
     cart_details = UserCart(
         cart_userid = customer_id,
@@ -294,23 +308,51 @@ def add_to_cart(request , customer_id , product_id):
 
     if existing_cart_item:
         existing_cart_item.quantity += 1
+        existing_cart_item.cost = product.cost * existing_cart_item.quantity
         existing_cart_item.save()
         
     else:
         cart_details = UserCart(
             cart_userid=customer_id,
             cart_product=product_id,
-            quantity=1
+            quantity=1,
+            cost = product.cost
         )
         cart_details.save()
 
     return redirect('cart', customer_id=customer_id)
 
-def cart(request , customer_id):
-    cart = UserCart.objects.filter(cart_userid=customer_id)
+def cart(request, customer_id):
+    cart = UserCart.objects.filter(cart_userid=customer_id).values()
     cart_products = ProductDetails.objects.filter(product_id__in=cart.values_list('cart_product', flat=True))
     user = UserProfile.objects.get(id=customer_id)
+<<<<<<< HEAD
+    cus = customer_id
+    # Zip the cart and cost lists in the view
+    cart_and_cost = zip(cart_products, cart)
+    quantity_range = range(1,7)
+    total_cost = sum(item['cost'] for item in cart)
+
+    return render(request, 'cart.html', {'cart_and_cost': cart_and_cost, 'cus': cus,'quantity_range': quantity_range,'total_cost': total_cost})
+
+def update_quantity(request, cust_id):
+    product_id = request.POST.get('product_id')
+    quantity = int(request.POST.get('quantity', 0))
+    user_cart = get_object_or_404(UserCart, cart_product=product_id, cart_userid=cust_id)
+    product_details = get_object_or_404(ProductDetails, product_id=product_id)
+
+        # Update the quantity and cost in the database
+    user_cart.quantity = quantity
+    user_cart.cost = quantity * product_details.cost  # Assuming you have a 'price' field in ProductDetails
+    user_cart.save()
+    # Update the quantity in your database or session
+    # You need to implement this based on your data structure
+
+    return redirect('cart', customer_id=cust_id)
+
+=======
     return render(request , 'cart.html' , {'cart':cart_products , 'user':user})
+>>>>>>> 8d7d4c53d175109f7f6d69f6a59fb837d62d20a3
 
 def delete_product(request, customer_id, product_id):
     product = UserCart.objects.filter(cart_product=product_id)
@@ -405,11 +447,10 @@ def confirm_order(request,customer_id):
         
 def customer_profile(request, customer_id):
     try:
-        customer_details = UserProfile.objects.get(id=customer_id)
+        user_details = UserProfile.objects.get(id=customer_id)
     except UserProfile.DoesNotExist:
-        return render(request, 'customerprofile.html', {'error_message': 'Customer not found.'})
-
-    return render(request, 'customerprofile.html', {'customer_details': customer_details})
+        return render(request, 'customer_homepage.html')  
+    return render(request, 'customerprofile.html', {'customer_details': user_details})
 
 def landing_page_view(request):
     return render(request, 'landingpage.html')
