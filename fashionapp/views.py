@@ -4,6 +4,7 @@ from fashionapp.models import UserProfile, VendorDetails, OrderDetails, ProductD
 from django.contrib.auth.models import User
 from django.utils.crypto import get_random_string
 from django.core.mail import send_mail
+from django.urls import reverse
 import random
 import pandas as pd
 import plotly.express as px
@@ -228,7 +229,7 @@ def store_product(request, vendorid):
         )
 
         product_details.save()
-        return HttpResponse("stored")
+        return redirect('display_product', vendorid=vendorid)
 
 def view_orders(request,vendorid):
     orderitems = OrderDetails.objects.filter(vend_id_id=vendorid).values()
@@ -309,8 +310,13 @@ def cart(request , customer_id):
     cart = UserCart.objects.filter(cart_userid=customer_id)
     cart_products = ProductDetails.objects.filter(product_id__in=cart.values_list('cart_product', flat=True))
     user = UserProfile.objects.get(id=customer_id)
-
     return render(request , 'cart.html' , {'cart':cart_products , 'user':user})
+
+def delete_product(request, customer_id, product_id):
+    product = UserCart.objects.filter(cart_product=product_id)
+    product.delete()
+    cart_url = reverse('cart', kwargs={'customer_id': customer_id})
+    return redirect(cart_url)
 
 def edit_product(request, product_id):
     product_details = get_object_or_404(ProductDetails, product_id=product_id)
@@ -396,16 +402,7 @@ def confirm_order(request,customer_id):
         })
 
     return render(request, "confirm_order.html", {"product": product_details_list})
-    
-def delete_product(request, customer_id, product_id):
-    if request.user.is_authenticated and request.user.id == customer_id:
-        product = UserCart.objects.filter(cart_product=product_id)
-        product.delete()
         
-        return redirect('cart', customer_id=customer_id)
-    else:
-        return HttpResponse("Unauthorized access")
-    
 def customer_profile(request, customer_id):
     try:
         customer_details = UserProfile.objects.get(id=customer_id)
