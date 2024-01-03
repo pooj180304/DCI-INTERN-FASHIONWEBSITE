@@ -326,7 +326,6 @@ def cart(request, customer_id):
     cart = UserCart.objects.filter(cart_userid=customer_id).values()
     cart_products = ProductDetails.objects.filter(product_id__in=cart.values_list('cart_product', flat=True))
     user = UserProfile.objects.get(id=customer_id)
-<<<<<<< HEAD
     cus = customer_id
     # Zip the cart and cost lists in the view
     cart_and_cost = zip(cart_products, cart)
@@ -350,9 +349,7 @@ def update_quantity(request, cust_id):
 
     return redirect('cart', customer_id=cust_id)
 
-=======
     return render(request , 'cart.html' , {'cart':cart_products , 'user':user})
->>>>>>> 8d7d4c53d175109f7f6d69f6a59fb837d62d20a3
 
 def delete_product(request, customer_id, product_id):
     product = UserCart.objects.filter(cart_product=product_id)
