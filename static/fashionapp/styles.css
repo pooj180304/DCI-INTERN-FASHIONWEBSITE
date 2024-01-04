@@ -78,6 +78,9 @@
     border-radius: 31px;
 
 }
+.cus-cont{
+    
+}
 .custom-container h3{
     font-family: 'Crimson Text', serif; 
     font-weight: 700; 
@@ -247,4 +250,25 @@ h2 {
     .header-right {
         float: none;
     }
+}
+#services {
+    margin-top: 50px;
+}
+
+.service {
+    margin-top: 20px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.service h4 {
+    color: #333;
+    margin-top: 0;
+}
+
+.service p {
+    color: #555;
 }
