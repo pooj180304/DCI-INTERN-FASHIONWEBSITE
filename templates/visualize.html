@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,6 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -17,6 +17,7 @@
             padding: 0;
             background-color: #f4f4f4;
             color: #333;
+            overflow: hidden; /* To prevent scrolling */
         }
 
         h2 {
@@ -30,6 +31,14 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             background-color: #fff;
             display: none; /* Initially hide visualization containers */
+            height: 100vh; /* Set container height to cover the entire viewport height */
+        }
+        
+        .visualization-container img {
+            display: block;
+            width: 3700px;
+            height: 100%;
+            object-fit: cover;
         }
 
         button {
@@ -76,15 +85,28 @@
 
         .mySlides {
             display: none;
+            opacity: 0; /* Initial opacity set to 0 */
             animation: fade 1s ease-out;
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
         }
+        
+        
 
         @keyframes fade {
-            from { opacity: 0.4; }
-            to { opacity: 1; }
+            from {
+                opacity: 0.4;
+            }
+
+            to {
+                opacity: 1;
+            }
         }
 
-        .prev, .next {
+        .prev,
+        .next {
             position: absolute;
             top: 50%;
             padding: 10px;
@@ -98,7 +120,8 @@
             transition: background-color 0.3s;
         }
 
-        .prev:hover, .next:hover {
+        .prev:hover,
+        .next:hover {
             background-color: #007bff;
             color: #fff;
         }
@@ -108,7 +131,9 @@
         }
     </style>
 </head>
+
 <body>
+    
     <div class="navbar">
         <a onclick="currentSlide(1)">Sales Performance</a>
         <a onclick="currentSlide(2)">Monthly Sales Trend</a>
@@ -125,7 +150,7 @@
 
         <div class="visualization-container mySlides" id="viz2">
             <h2>Monthly Sales Trend for Vendor {{ vendor_id }}</h2>
-            {{ fig2_div|safe }}
+           {{ fig2_div|safe }}
         </div>
 
         <div class="visualization-container mySlides" id="viz3">
@@ -164,11 +189,18 @@
             let slides = document.getElementsByClassName("mySlides");
             if (n > slides.length) { slideIndex = 1 }
             if (n < 1) { slideIndex = slides.length }
+
             for (i = 0; i < slides.length; i++) {
+                slides[i].style.opacity = 0; // Set opacity to 0 for all slides
                 slides[i].style.display = "none";
             }
+
             slides[slideIndex - 1].style.display = "block";
+
+            // Add a fade-in effect
+            $(slides[slideIndex - 1]).animate({ opacity: 1 }, 500);
         }
     </script>
 </body>
+
 </html>
