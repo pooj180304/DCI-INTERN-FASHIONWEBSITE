@@ -1,41 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-    <title>MAIN PAGE</title>
+    <meta name="description" content="Professional online store page">
+    <meta name="keywords" content="online store, ecommerce, products">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+        crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <title>Professional Online Store</title>
     <style>
+        .navbar {
+            background-color: #B6C4B6; /* Light pink color */
+        }
+
+        a {
+            color: black !important; /* Set link color to black */
+        }
+
         body {
-            font-family: 'Arial', sans-serif;
             margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-            color: #333;
-        }
-
-        h1 {
-            text-align: center;
-            color: #007bff;
-        }
-
-        nav {
-            background-color: #007bff;
-            padding: 10px;
-            text-align: center;
-        }
-
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            padding: 10px;
-            margin: 0 10px;
-        }
-
-        nav a:hover {
-            background-color: #0056b3;
+            font-family: Arial, sans-serif;
+            background-color: #FBF6EE; /* Light gray background color */
         }
 
         .product-container {
@@ -43,11 +36,12 @@
             justify-content: space-between;
             align-items: center;
             border: 1px solid #ddd;
-            margin: 20px;
+            margin: 20px auto;
             padding: 20px;
             background-color: #fff;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            max-width: 800px;
         }
 
         .product-details {
@@ -64,10 +58,6 @@
             border-radius: 5px;
         }
 
-        h2 {
-            color: #007bff;
-        }
-
         p {
             margin: 5px 0;
         }
@@ -75,19 +65,107 @@
         button {
             background-color: #007bff;
             color: #fff;
-            padding: 10px;
+            padding: 12px;
             border: none;
             border-radius: 5px;
             cursor: pointer;
+            font-size: 16px;
         }
 
         button:hover {
             background-color: #0056b3;
         }
+
+        form {
+            margin-top: 20px;
+        }
+
+        .form-label {
+            font-weight: bold;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
     </style>
 </head>
+
 <body>
-    <nav>
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#" style="color: black !important;">Minimal</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="menDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: black !important;">
+                            Men
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="menDropdown">
+                            {% for subcategory in men_subcategories %}
+                            <a class="dropdown-item"
+                                href="{% url 'product_categories' subcategory=subcategory customer_id=customer.id %}">{{ subcategory }}</a>
+                            {% endfor %}
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="womenDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: black !important;">
+                            Women
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="womenDropdown">
+                            {% for subcategory in women_subcategories %}
+                            <a class="dropdown-item"
+                                href="{% url 'product_categories' subcategory=subcategory customer_id=customer.id %}">{{ subcategory }}</a>
+                            {% endfor %}
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="kidsDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="color: black !important;">
+                            Kids
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="kidsDropdown">
+                            {% for subcategory in kids_subcategories %}
+                            <a class="dropdown-item"
+                                href="{% url 'product_categories' subcategory=subcategory customer_id=customer.id %}">{{ subcategory }}</a>
+                            {% endfor %}
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'confirm_order' customer_id=customer_detail.id %}" style="color: black !important;">My Order</a>
+                    </li>
+                </ul>
+            </div>
+            <ul class="nav justify-content-end">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'cart' customer_detail.id  %}" style="color: black !important;">
+                        <i class="fas fa-shopping-cart"></i> <!-- FontAwesome cart icon -->
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'customer_profile' customer_detail.id  %}" style="color: black !important;">
+                        <i class="fas fa-user"></i> <!-- FontAwesome user icon -->
+                    </a>
+                </li>
+            </ul>
+        </div>
     </nav>
 
     <h1>HELLO {{ customer_detail.name }}</h1>
@@ -98,49 +176,50 @@
             <p>Product Name: {{ place_order.product_name }}</p>
             <p>Availability: {{ place_order.availability }}</p>
             <p>Cost: ${{ place_order.cost }}</p>
-            <form class="user_details" action="{% url 'place_orderdetails' customer_detail.id place_order.product_id %}" method="post">
+            <form class="user_details"
+                action="{% url 'place_orderdetails' customer_detail.id place_order.product_id %}" method="post">
                 {% csrf_token %}
                 <div class="row justify-content-center">
-                  <div class="col-md-4 mb-3">
-                    <label class="form-label" for="name">Quantity:</label>
-                    <input class="form-control" type="number" id="quantity" name="quantity" placeholder="Enter">
-                  </div>
-                  <div class="col-md-4 mb-3">
-                    <label class="form-label" for="type">Payment Method:</label>
-                    <select class="form-select" id="payment_type" name="payment_type">
-                      <option value="">Select</option>
-                      <option value="UPI">UPI</option>
-                      <option value="Net Banking">Net Banking</option>
-                      <option value="Cash on delivery">Cash on delivery</option>
-                    </select>
-                  </div>
-                  <div class="col-md-4 mb-3">
-                    <label class="form-label" for="mobileNumber">Address:</label>
-                    <input class="form-control" type="text" id="address" name="address" placeholder="Enter">
-                  </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label" for="name">Quantity:</label>
+                        <input class="form-control" type="number" id="quantity" name="quantity" placeholder="Enter">
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label" for="type">Payment Method:</label>
+                        <select class="form-select" id="payment_type" name="payment_type">
+                            <option value="">Select</option>
+                            <option value="UPI">UPI</option>
+                            <option value="Net Banking">Net Banking</option>
+                            <option value="Cash on delivery">Cash on delivery</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label" for="mobileNumber">Address:</label>
+                        <input class="form-control" type="text" id="address" name="address" placeholder="Enter">
+                    </div>
                 </div>
                 <button class="btn btn-primary">Confirm</button>
             </form>
-            
         </div>
     </div>
+
     <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     {% block scripts %}
     <script>
         {% if messages %}
-            {% for message in messages %}
-                Toastify({
-                    text: "{{ message }}",
-                    duration: 3000,
-                    gravity: "top",  
-                    position: "right",
-                    stopOnFocus: true,
-                    backgroundColor: "{{ message.tags }}",
-                }).showToast();
-            {% endfor %}
+        {% for message in messages %}
+        Toastify({
+            text: "{{ message }}",
+            duration: 3000,
+            gravity: "top",
+            position: "right",
+            stopOnFocus: true,
+            backgroundColor: "{{ message.tags }}",
+        }).showToast();
+        {% endfor %}
         {% endif %}
     </script>
-{% endblock %}
-
+    {% endblock %}
 </body>
+
 </html>

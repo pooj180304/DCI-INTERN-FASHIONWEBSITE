@@ -8,6 +8,7 @@
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
       .navbar {
         background-color: #B6C4B6; /* Light pink color */
@@ -78,6 +79,7 @@
       
       a{
         text-decoration: none;
+        color:black;
       }
       .greeting {
         text-align: center;
@@ -140,16 +142,23 @@
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'cart' customer.id  %}">My Cart</a>
-          </li>
-          <li class="nav-item">
             <a class="nav-link" href="{% url 'confirm_order' customer_id=customer.id %}">My Order</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'customer_profile' customer.id  %}">Profile</a>
-          </li>
         </ul>
+          
       </div>
+      <ul class="nav justify-content-end">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'cart' customer.id  %}">
+            <i class="fas fa-shopping-cart" style="color: black;"></i> <!-- FontAwesome cart icon -->
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'customer_profile' customer.id  %}">
+            <i class="fas fa-user" style="color: black;"></i> <!-- FontAwesome user icon -->
+          </a>
+        </li>
+      </ul>
     </div>
   </nav>
   <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">

@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 from django.shortcuts import render, redirect, get_object_or_404
 from fashionapp.models import UserProfile, VendorDetails, OrderDetails, ProductDetails, ProductReviews , UserCart
 from django.contrib.auth.models import User
@@ -11,7 +11,8 @@ import plotly.express as px
 from plotly.offline import plot  
 import plotly.io as pio
 from django.db.models import Avg
-
+from django.urls import reverse
+from django.contrib import messages
 def mainpage(req):
     return render(req,'landingpage.html')
 
@@ -383,8 +384,12 @@ def place_orderdetails(request,customer_id , product_id ):
         payment_type = request.POST.get('payment_type')
         address = request.POST.get('address')
         create_order(product_details, customer, quantity, payment_type, address)
+        if create_order(product_details, customer, quantity, payment_type, address):
+            messages.success(request, 'Order placed successfully!')
+        else:
+            messages.error(request, 'Failed to place the order. Please check the quantity and try again.')
 
-        return HttpResponse("Ordered placed") 
+        
     return render(request,"place_orderdetails.html",{'place_order':product_details,'customer_detail':customer})
 
 
