@@ -3,19 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orders placed</title>
+    <title>Orders Placed</title>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: rgba(138, 205, 215, 0.7);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+
+        div {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            width: 400px;
+        }
+
+        h2 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        p {
+            margin-bottom: 8px;
+            color: #555;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button a {
+            text-decoration: none;
+            color: #fff;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
-    {%for i in orders%}
+
+    <h1>View Your Customer's Orders</h1>
+
+    {% for i in orders %}
     <div>
-        <h2>{{i.product_ordered_id}}</h2>
-        <p>{{i.invoice_number}}</p>
-        <p>{{i.cost}}</p>
-        <p>{{i.payment_details}}</p>
-        <p>{{i.address}}</p>
-        <p>{{i.quantity}}</p>
-        <p>{{i.status}}</p>
-        <button><a href="{% url 'order_update' ordid=i.product_ordered_id %}">Update order status</a></button>
+        <h2>{{ i.product_ordered_id }}</h2>
+        <p>Invoice Number: {{ i.invoice_number }}</p>
+        <p>Cost: {{ i.cost }}</p>
+        <p>Payment Details: {{ i.payment_details }}</p>
+        <p>Address: {{ i.address }}</p>
+        <p>Quantity: {{ i.quantity }}</p>
+        <p>Status: {{ i.status }}</p>
+        <button><a href="{% url 'order_update' ordid=i.product_ordered_id %}">Update Order Status</a></button>
     </div>
     {% endfor %}
     
