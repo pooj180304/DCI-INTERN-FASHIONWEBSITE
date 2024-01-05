@@ -11,8 +11,6 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <style>
-<<<<<<< HEAD
-=======
         .header {
     overflow: hidden;
     background-color: rgba(255, 255, 255, 0.79);
@@ -264,7 +262,6 @@ h2 {
     }
 }
 
->>>>>>> 9b10a22c599457e8ea097dec261ba94b9013e1a8
         .service-container {
             display: flex;
             flex-wrap: wrap;
@@ -306,10 +303,7 @@ h2 {
 
         .cus-cont {
             margin-top: 50px;
-<<<<<<< HEAD
-=======
             margin-bottom: 50px;
->>>>>>> 9b10a22c599457e8ea097dec261ba94b9013e1a8
         }
 
         /* Animation */
@@ -327,8 +321,6 @@ h2 {
         .animated {
             animation: fadeInUp 1s ease-out;
         }
-<<<<<<< HEAD
-=======
         .slideshow-container {
             max-width: 100%;
             position: relative;
@@ -343,7 +335,6 @@ h2 {
         }
 
 
->>>>>>> 9b10a22c599457e8ea097dec261ba94b9013e1a8
     </style>
 </head>
 <body>
@@ -354,11 +345,7 @@ h2 {
         <div class="header-right">
             <a href="#about" class="about">About us <i class="fas fa-info-circle"></i></a>
             <a href="#services" class="services">Services <i class="fas fa-cogs"></i></a>
-<<<<<<< HEAD
-            <a href="#contact" class="help">Help <i class="fas fa-question-circle"></i></a>
-=======
             <a href="#help" class="help">Help <i class="fas fa-question-circle"></i></a>
->>>>>>> 9b10a22c599457e8ea097dec261ba94b9013e1a8
             <a class="log_in" href="{% url 'login' %}">LOG IN</a>
             <a class="sign_up" href="{% url 'register_user' %}">SIGN UP</a>
         </div>
@@ -392,47 +379,27 @@ h2 {
         <img class="img1" src="{% static 'images/image-2.png' %}" style="display: none;">
         <img class="img1" src="{% static 'images/image-3.png' %}" style="display: none;">
     </div>
-<<<<<<< HEAD
-    <div class="container cus-cont" id="services">
-        <h3 style="font-size: xx-large;">KEY SERVICES</h3>
-        <div class="service-container">
-            <div class="service animated" data-aos="fade-up">
-=======
     <div style="background-color: rgba(138, 205, 215, 0.7); margin-bottom: 3cm;">
     <div class="container cus-cont" >
         <h3 style="font-size: xx-large; color: white;padding: 10px;" id="services">KEY SERVICES</h3>
         <div class="service-container">
             <div class="service animated" data-aos="fade-up" style="margin-bottom: 3cm;">
->>>>>>> 9b10a22c599457e8ea097dec261ba94b9013e1a8
                 <i class="fas fa-shopping-cart"></i>
                 <h4>Product Sourcing</h4>
                 <p>Discover a curated selection of unique and top-quality products sourced from around the world.</p>
             </div>
 
-<<<<<<< HEAD
-            <div class="service animated" data-aos="fade-up" data-aos-delay="200">
-=======
             <div class="service animated" data-aos="fade-up" data-aos-delay="200"style="margin-bottom: 3cm;">
->>>>>>> 9b10a22c599457e8ea097dec261ba94b9013e1a8
                 <i class="fas fa-user-tie"></i>
                 <h4>Fashion Consultation</h4>
                 <p>Get personalized fashion advice from our expert stylists to enhance your unique style.</p>
             </div>
 
-<<<<<<< HEAD
-            <div class="service animated" data-aos="fade-up" data-aos-delay="400">
-=======
             <div class="service animated" data-aos="fade-up" data-aos-delay="400" style="margin-bottom: 3cm;">
->>>>>>> 9b10a22c599457e8ea097dec261ba94b9013e1a8
                 <i class="fas fa-truck"></i>
                 <h4>Express Shipping</h4>
                 <p>Enjoy fast and reliable express shipping to get your favorite items delivered to your doorstep quickly.</p>
             </div>
-<<<<<<< HEAD
-        </div>
-    </div>
-
-=======
 
             <div class="service animated" data-aos="fade-up" data-aos-delay="400" style="margin-bottom: 3cm;">
                 <i class="fas fa-gift"></i>
@@ -498,7 +465,6 @@ h2 {
             </div>
         </div>
     </div>
->>>>>>> 9b10a22c599457e8ea097dec261ba94b9013e1a8
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 
@@ -510,33 +476,6 @@ h2 {
             });
 
             // Smooth scrolling to services section
-<<<<<<< HEAD
-            $(".services").click(function () {
-                $("html, body").animate({
-                    scrollTop: $("#services").offset().top
-                }, 1000);
-            });
-        });
-        $(document).ready(function () {
-            // Initialize AOS library for animations
-            AOS.init({
-                duration: 1000,
-                easing: 'ease-in-out',
-                once: true,
-            });
-
-            $(".img1").each(function (index) {
-                $(this).delay(1000 * index).fadeIn(1000);
-            });
-
-            // Smooth scrolling to services section
-            $(".services").click(function () {
-                $("html, body").animate({
-                    scrollTop: $("#services").offset().top
-                }, 1000);
-            });
-=======
->>>>>>> 9b10a22c599457e8ea097dec261ba94b9013e1a8
         });
         
         var slideIndex = 0;
