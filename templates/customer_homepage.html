@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr">
 
 <head>
+<<<<<<< HEAD
     <meta charset="utf-8">
     <title>Your Website Title</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -9,6 +10,15 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
+=======
+  <meta charset="utf-8">
+  <title>Your Website Title</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+>>>>>>> 5ad1e2ad3be581f5ed956510734e80c38123fd75
     <style>
         .navbar {
             background-color: #B6C4B6; /* Light pink color */
@@ -34,6 +44,7 @@
             transition: transform 0.3s ease-in-out;
         }
 
+<<<<<<< HEAD
         .product-container:hover {
             transform: translateY(-5px);
         }
@@ -99,6 +110,81 @@
             height: 500px;
             width: 100%;
         }
+=======
+      /* Improved product display styling */
+      .product-container {
+        background-color: #fff;
+        float: left;
+        margin: 10px; /* Added margin for spacing */
+        width: 220px; /* Increased width for better spacing */
+        padding: 15px;
+        height: 300px; /* Increased height for better alignment */
+        box-sizing: border-box; /* Include padding in the total width */
+      }
+      
+      .product-item {
+        width: 100%;
+        box-sizing: border-box;
+      }
+      
+      .product-image {
+        display: block;
+        margin: auto;
+        width: 100%;
+        height: 65%;
+        object-fit: cover;
+      }
+      
+      .product-details {
+        padding: 10px;
+      }
+      
+      .product-details h2 {
+        font-size: 1.2em;
+        margin-bottom: 10px;
+      }
+      
+      .product-details p {
+        margin: 5px 0;
+      }
+      
+      .product-details button {
+        background-color: #FFC0D9;
+        color: #fff;
+        padding: 8px 12px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      
+      .product-details button:hover {
+        background-color: #ff80aa;
+      }
+      
+      /* Add some spacing between products */
+      .product-container:not(:last-child) {
+        margin-right: 20px;
+      }
+      
+      a{
+        text-decoration: none;
+        color:black;
+      }
+      .greeting {
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        margin-top: 20px;
+        color: #333;
+        font-style: italic;
+      }
+      .img-1{
+        height: 500px;
+        width: 100%;
+        margin-top: 20px;
+      }
+>>>>>>> 5ad1e2ad3be581f5ed956510734e80c38123fd75
     </style>
 </head>
 
@@ -171,10 +257,32 @@
             <div class="carousel-item">
                 <img class="img-1" src="/media/images/redd.jpg" class="d-block w-100" alt="...">
             </div>
+<<<<<<< HEAD
             <div class="carousel-item">
                 <img class="img-1" src="/media/images/dress2.jpg" class="d-block w-100" alt="...">
             </div>
         </div>
+=======
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'confirm_order' customer_id=customer.id %}">My Order</a>
+          </li>
+        </ul>
+          
+      </div>
+      <ul class="nav justify-content-end">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'cart' customer.id  %}">
+            <i class="fas fa-shopping-cart" style="color: black;"></i> <!-- FontAwesome cart icon -->
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'customer_profile' customer.id  %}">
+            <i class="fas fa-user" style="color: black;"></i> <!-- FontAwesome user icon -->
+          </a>
+        </li>
+      </ul>
+>>>>>>> 5ad1e2ad3be581f5ed956510734e80c38123fd75
     </div>
 
     <div class="greeting">HELLO {{ customer.name }}</div>
