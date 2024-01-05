@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap');
         *{
@@ -17,20 +19,28 @@
             text-transform: capitalize;
             transition: .2s linear;
         }
+        .navbar {
+            background-color: rgba(138, 205, 215, 0.7);
+            box-shadow: 0 4px 2px -2px gray;
+        }
+        .navbar-brand img {
+            max-height: 40px;
+            object-fit: contain;
+        }
 
         .cont{
-            background: rgba(215, 93, 141, 1);
-            background: linear-gradient(45deg, rgba(215, 93, 141, 1), rgb(188, 70, 199), rgba(215, 93, 141, 1));
+            background-color: #FBF6EE; /* Light gray background color */
             padding:15px 9%;
             padding-bottom: 100px;
             max-width: 100%;
         }
 
         .cont .heading{
+            margin-top: 100px; /* Adjust the margin-top value as needed */
             text-align: center;
             padding-bottom: 15px;
-            color:#fff;
-            text-shadow: 0 5px 10px rgba(0,0,0,.2);
+            color: rgba(215, 93, 141, 1);
+            text-shadow: 0 5px 10px rgba(0, 0, 0, .2);
             font-size: 50px;
         }
 
@@ -89,14 +99,75 @@
         .butn{
             width:5cm;
         }
+        .btn-dark a {
+            text-decoration: none;
+        }
         @media (max-width:768px){
             .container{
                 padding:20px;
             }
         }
+        .cont .total-cost {
+            text-align: center;
+            font-size: 24px;
+            margin-top: 30px;
+            color: #333;
+        }
+        
+        .cont .total-cost span {
+            font-weight: bold;
+            color: #e44d26; /* Adjust the color to your preference */
+        }
+        
     </style>
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="customer_homepage.html">
+            <img class="logo1" src="{% static 'images/logo-1.png' %}" alt="Logo">
+        </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+              
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'confirm_order' customer_id=cus %}"  style="background-color: rgba(215, 93, 141, 1); 
+                padding: 10px;
+                border-radius: 4px;
+                text-decoration: none;
+                color: white;">My Order</a>
+              </li>
+            </ul>
+              
+          </div>
+          <ul class="nav justify-content-end">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'cart' cus  %}" style="background-color: rgba(215, 93, 141, 1); 
+              padding: 10px;
+              border-radius: 4px;
+              text-decoration: none;
+              color: white;
+              margin-right: 10px;">
+                <i class="fas fa-shopping-cart" style="color: #96EFFF;"></i> <!-- FontAwesome cart icon -->
+              </a>
+            </li>
+            
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'customer_profile' cus  %}" style="background-color: rgba(215, 93, 141, 1); 
+              padding: 10px;
+              border-radius: 4px;
+              text-decoration: none;
+              color: white;">
+                <i class="fas fa-user" style="color: #96EFFF;"></i> <!-- FontAwesome user icon -->
+              </a>
+            </li>
+          </ul>
+        </div>
+      </nav>
     
 <div class="cont">
 
@@ -120,7 +191,12 @@
                                 <option value="{{ i }}" {% if c.quantity == i %}selected{% endif %}>{{ i }}</option>
                             {% endfor %}
                         </select>
-                        <button type="submit" class="btn btn-info">Update Quantity</button>
+                        <button style="background-color: rgba(215, 93, 141, 1); 
+                        padding: 10px;
+                        border-radius: 4px;
+                        text-decoration: none;
+                        color: white;
+                        " type="submit" class="btn btn-info">Update Quantity</button>
                     </div>
                     <div class="col">
                         <p class="form-control butn">Availability: {{ item.availability }}</p>
@@ -146,11 +222,20 @@
                   </div>
                 </form>
               </div>
-              <button class="btn btn-dark" ><a href={% url 'delete_product' customer_id=cus product_id=item.product_id %}>Delete</a></button>
+              <!-- Add the text-white class to the link -->
+<button style="background-color: rgba(215, 93, 141, 1); 
+padding: 10px;
+border-radius: 4px;
+text-decoration: none;
+color: white;
+" class="btn btn-dark"><a href="{% url 'delete_product' customer_id=cus product_id=item.product_id %}" class="text-white">Delete</a></button>
+
         </div>
     </div>
     {% endfor %}
 </div>
-<h3 class="text-center mt-4">Total Cost: {{ total_cost }}</h3>
+<h3 class="total-cost text-center mt-4">Total Cost: <span>{{ total_cost }}</span></h3>
+
+
 </body>
 </html> 

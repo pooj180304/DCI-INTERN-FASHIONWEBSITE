@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
@@ -9,16 +10,28 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
     <style>
       .navbar {
-        background-color: #B6C4B6; /* Light pink color */
+        background-color: rgba(138, 205, 215, 0.7);
+            box-shadow: 0 4px 2px -2px gray;
       }
 
       body {
         margin: 0;
         font-family: Arial, sans-serif;
         background-color: #FBF6EE; /* Light gray background color */
+        
       }
+      .navbar-brand img {
+        max-height: 40px;
+        object-fit: contain;
+    }
+    .carousel {
+      margin-top: 50px; /* Adjust as needed */
+  }
 
 
       /* Improved product display styling */
@@ -32,17 +45,14 @@
         box-sizing: border-box; /* Include padding in the total width */
       }
       
-      .product-item {
-        width: 100%;
-        box-sizing: border-box;
-      }
+      
       
       .product-image {
         display: block;
-        margin: auto;
-        width: 100%;
-        height: 65%;
-        object-fit: cover;
+    margin: auto;
+    max-width: 100%; /* Set the maximum width to 100% */
+    max-height: 100%; /* Set the maximum height to 100% */
+    object-fit: cover;
       }
       
       .product-details {
@@ -79,16 +89,17 @@
       
       a{
         text-decoration: none;
-        color:black;
+        color:pink;
       }
       .greeting {
-        text-align: center;
-        font-size: 24px;
+        font-family: 'Montserrat', sans-serif;
+        font-size: 28px; /* Adjust the font size as needed */
         font-weight: bold;
-        margin-top: 20px;
-        color: #333;
-        font-style: italic;
-      }
+        margin-top: 40px; /* Increase the margin for more space */
+        color: #666; /* Use a gray shade for the text color */
+        margin-left: 15px;
+        
+    }
       .img-1{
         height: 500px;
         width: 100%;
@@ -101,7 +112,9 @@
 
   <nav class="navbar navbar-expand-lg fixed-top">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">Minimal</a>
+      <a class="navbar-brand" href="customer_homepage.html">
+        <img class="logo1" src="{% static 'images/logo-1.png' %}" alt="Logo">
+    </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -125,7 +138,7 @@
               Women
             </a>
             <div class="dropdown-menu" aria-labelledby="menDropdown">
-              {% for subcategory in men_subcategories %}
+              {% for subcategory in women_subcategories %}
               <a class="dropdown-item" href="{% url 'product_categories' subcategory=subcategory customer_id=customer.id %}">{{ subcategory }}</a>
               {% endfor %}
             </div>
@@ -142,25 +155,40 @@
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'confirm_order' customer_id=customer.id %}">My Order</a>
+            <a class="nav-link" href="{% url 'confirm_order' customer_id=customer.id %}"  style="background-color: rgba(215, 93, 141, 1); 
+            padding: 10px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: white;">My Order</a>
           </li>
         </ul>
           
       </div>
       <ul class="nav justify-content-end">
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'cart' customer.id  %}">
-            <i class="fas fa-shopping-cart" style="color: black;"></i> <!-- FontAwesome cart icon -->
+          <a class="nav-link" href="{% url 'cart' customer.id  %}" style="background-color: rgba(215, 93, 141, 1); 
+          padding: 10px;
+          border-radius: 4px;
+          text-decoration: none;
+          color: white;
+          margin-right: 10px;">
+            <i class="fas fa-shopping-cart" style="color: #96EFFF;"></i> <!-- FontAwesome cart icon -->
           </a>
         </li>
+        
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'customer_profile' customer.id  %}">
-            <i class="fas fa-user" style="color: black;"></i> <!-- FontAwesome user icon -->
+          <a class="nav-link" href="{% url 'customer_profile' customer.id  %}" style="background-color: rgba(215, 93, 141, 1); 
+          padding: 10px;
+          border-radius: 4px;
+          text-decoration: none;
+          color: white;">
+            <i class="fas fa-user" style="color: #96EFFF;"></i> <!-- FontAwesome user icon -->
           </a>
         </li>
       </ul>
     </div>
   </nav>
+
   <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
       <div class="carousel-item active">
@@ -176,7 +204,7 @@
   </div>
 
 
-  <div class="greeting">HELLO {{customer.name}}</div>
+  <div class="greeting">GRAND GLOBAL BRANDS</div>
 
   {% for product in products %}
   <div class="product-container">
