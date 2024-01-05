@@ -8,7 +8,7 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #f4f4f4;
+            background-color: rgba(138, 205, 215, 0.7);
             margin: 0;
             padding: 0;
             display: flex;
@@ -19,15 +19,17 @@
 
         form {
             background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            margin: auto;
         }
 
         h2 {
             text-align: center;
             color: #333;
+            margin-bottom: 30px;
         }
 
         label {
@@ -40,31 +42,43 @@
         select,
         textarea {
             width: 100%;
-            padding: 8px;
-            margin-bottom: 16px;
+            padding: 12px;
+            margin-bottom: 20px;
             box-sizing: border-box;
             border: 1px solid #ccc;
-            border-radius: 4px;
+            border-radius: 6px;
+            font-size: 16px;
+        }
+
+        select {
+            appearance: none;
+            padding-right: 30px;
+            background: url('https://img.icons8.com/material-rounded/24/000000/expand-arrow.png') no-repeat right center;
+            background-size: 20px;
         }
 
         input[type="submit"] {
-            background-color: #4caf50;
-            color: #fff;
+            background-color: rgba(215, 93, 141, 1);
+            color: white;
             cursor: pointer;
+            border: none;
+            border-radius: 6px;
+            padding: 15px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
         }
 
         input[type="submit"]:hover {
-            background-color: #45a049;
+            background-color: rgba(185, 73, 121, 1);
         }
     </style>
 </head>
 <body>
 
-    <h2>Product Information</h2>
+    <form action="{% url 'store_product' id %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h2>Product Information</h2>
 
-<form action="{% url 'store_product' id %} " method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <h1> HELLO VENDOR WITH ID:{{id}}</h1>
         <label for="product_name">Product Name:</label>
         <input type="text" id="product_name" name="product_name" required>
 
@@ -84,15 +98,13 @@
         <input type="number" id="cost" name="cost" required>
 
         <label for="images">Images:</label>
-        <input type="file" id="images" name="images" >
+        <input type="file" id="images" name="images">
 
         <label for="category">Category:</label>
-<select id="category" name="category" required>
-    <option value="men">Men</option>
-    <option value="women">Women</option>
-    <option value="women">Don't look for aditional option</option>
-</select>
-
+        <select id="category" name="category" required>
+            <option value="men">Men</option>
+            <option value="women">Women</option>
+        </select>
 
         <label for="sub_category">Sub Category:</label>
         <input type="text" id="sub_category" name="sub_category">
