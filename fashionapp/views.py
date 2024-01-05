@@ -476,6 +476,7 @@ def product_details(request, product_id, cust_id):
         'reviews': reviews,
         'overall_rating': overall_rating,
         'star_ratings': star_ratings,
+        
     }
     return render(request, 'product_display.html', context)
 

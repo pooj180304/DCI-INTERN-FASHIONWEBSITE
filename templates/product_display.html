@@ -1,15 +1,14 @@
-<!-- product_details.html -->
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <style>
         body {
-            font-family: 'Arial', sans-serif;
             margin: 0;
-            padding: 0;
-            background-color: #f8f8f8;
-            color: #333;
-        }
+            font-family: Arial, sans-serif;
+            background-color: #FBF6EE; /* Light gray background color */
+            
+          }
 
         h1, h2 {
             color: #333;
@@ -83,14 +82,14 @@
         }
 
         .bar-fill {
-            background-color: #4caf50; /* Green color for filled portion */
+            background-color: rgba(215, 93, 141, 1); /* Green color for filled portion */
             height: 20px;
             border-radius: 5px;
         }
     </style>
 </head>
 <body>
-
+    
     <div class="container">
         <h1>Product Details</h1>
 
@@ -111,9 +110,21 @@
         </div>
 
         <div class="buttons">
-            <button><a href="{% url 'add_tocart' customer.id product.product_id %}">Add to cart</a></button>
-            <button><a href="{% url 'place_orderdetails' customer.id product.product_id  %}">Place Order</a></button>
-            <button><a href="{% url 'prod_rev' cust_id=customer.id prodid=product.product_id %}">Add review and rate the product</a></button>
+            <button style="background-color: rgba(215, 93, 141, 1); 
+            padding: 10px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: white;"><a href="{% url 'add_tocart' customer.id product.product_id %}">Add to cart</a></button>
+            <button style="background-color: rgba(215, 93, 141, 1); 
+            padding: 10px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: white;"><a href="{% url 'place_orderdetails' customer.id product.product_id  %}">Place Order</a></button>
+            <button style="background-color: rgba(215, 93, 141, 1); 
+            padding: 10px;
+            border-radius: 4px;
+            text-decoration: none;
+            color: white;"><a href="{% url 'prod_rev' cust_id=customer.id prodid=product.product_id %}">Add review and rate the product</a></button>
         </div>
 
         <div class="bar-graph">
