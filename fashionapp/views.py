@@ -228,7 +228,7 @@ def store_product(request, vendorid):
         )
 
         product_details.save()
-        return HttpResponse("stored")
+        return render(request,"addproduct.html",{ 'id' : vendorid})
 
 def view_orders(request,vendorid):
     orderitems = OrderDetails.objects.filter(vend_id_id=vendorid).values()

@@ -4,44 +4,106 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Vendor Profile</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: rgba(138, 205, 215, 0.7);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .form-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: grid;
+            gap: 20px;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        label {
+            text-align: left;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-    <h2>Edit Vendor Profile</h2>
+    <div class="form-container">
+        <h2>Edit Vendor Profile</h2>
 
-    <form method="post" action="{% url 'edit_and_save_vendor_profile' vendor_details.user_profile_id %}">
-        {% csrf_token %}
+        <form method="post" action="{% url 'edit_and_save_vendor_profile' vendor_details.user_profile_id %}">
+            {% csrf_token %}
 
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" value="{{ vendor_details.user_profile.name }}" required>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" value="{{ vendor_details.user_profile.name }}" required>
 
-        <label for="email">Email:</label>
-        <input type="text" id="email" name="email" value="{{ vendor_details.user_profile.email }}" required>
+            <label for="email">Email:</label>
+            <input type="text" id="email" name="email" value="{{ vendor_details.user_profile.email }}" required>
 
-        <label for="mobile_number">Mobile number:</label>
-        <input type="tel" id="mobile_number" name="mobile_number" value="{{ vendor_details.user_profile.mobile_number }}" required>
+            <label for="mobile_number">Mobile number:</label>
+            <input type="tel" id="mobile_number" name="mobile_number" value="{{ vendor_details.user_profile.mobile_number }}" required>
 
-        <label for="business_name">Business Name:</label>
-        <input type="text" id="business_name" name="business_name" value="{{ vendor_details.business_name }}" required>
+            <label for="business_name">Business Name:</label>
+            <input type="text" id="business_name" name="business_name" value="{{ vendor_details.business_name }}" required>
 
-        <label for="business_phone">Business Phone:</label>
-        <input type="text" id="business_phone" name="business_phone" value="{{ vendor_details.business_phone }}" required>
+            <label for="business_phone">Business Phone:</label>
+            <input type="text" id="business_phone" name="business_phone" value="{{ vendor_details.business_phone }}" required>
 
-        <label for="GSTIN_number">GSTIN Number:</label>
-        <input type="text" id="GSTIN_number" name="GSTIN_number" value="{{ vendor_details.GSTIN_number }}" required>
+            <label for="GSTIN_number">GSTIN Number:</label>
+            <input type="text" id="GSTIN_number" name="GSTIN_number" value="{{ vendor_details.GSTIN_number }}" required>
 
-        <label for="street">Street:</label>
-        <input type="text" id="street" name="street" value="{{ vendor_details.street }}" required>
+            <label for="street">Street:</label>
+            <input type="text" id="street" name="street" value="{{ vendor_details.street }}" required>
 
-        <label for="postal_code">Postal Code:</label>
-        <input type="text" id="postal_code" name="postal_code" value="{{ vendor_details.postal_code }}" required>
+            <label for="postal_code">Postal Code:</label>
+            <input type="text" id="postal_code" name="postal_code" value="{{ vendor_details.postal_code }}" required>
 
-        <label for="city">City:</label>
-        <input type="text" id="city" name="city" value="{{ vendor_details.city }}" required>
+            <label for="city">City:</label>
+            <input type="text" id="city" name="city" value="{{ vendor_details.city }}" required>
 
-        <label for="state">State:</label>
-        <input type="text" id="state" name="state" value="{{ vendor_details.state }}" required>
+            <label for="state">State:</label>
+            <input type="text" id="state" name="state" value="{{ vendor_details.state }}" required>
 
-        <button type="submit">Save</button>
-    </form>
+            <button type="submit">Save</button>
+        </form>
+    </div>
 </body>
 </html>

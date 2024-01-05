@@ -5,37 +5,80 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vendor Profile</title>
     <style>
-        a{
-            background-color: green;
-            padding: 10px;
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: rgba(138, 205, 215, 0.7);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .profile-container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        p {
+            margin: 10px 0;
+            color: #555;
+        }
+
+        a {
+            background-color: rgba(215, 93, 141, 1);
+            padding: 10px 20px;
             border-radius: 4px;
             text-decoration: none;
-            color: white;
+            color: black;
+            margin: 0 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        a:hover {
+            background-color: rgba(215, 93, 141, 1);
+        }
+
+        .error-message {
+            color: red;
         }
     </style>
 </head>
 <body>
     {% if vendor_details %}
-        <h2>Vendor Profile</h2>
-        <p><strong>Name:</strong> {{ vendor_details.user_profile.name }}</p>
-        <p><strong>Email:</strong> {{ vendor_details.user_profile.email }}</p>
-        <p><strong>Mobile Number:</strong> {{ vendor_details.user_profile.mobile_number }}</p>
-        <p><strong>Type:</strong> {{ vendor_details.user_profile.type }}</p>
-        
-        <p><strong>Business Name:</strong> {{ vendor_details.business_name }}</p>
-        <p><strong>Business Phone:</strong> {{ vendor_details.business_phone }}</p>
-        <p><strong>GSTIN Number:</strong> {{ vendor_details.GSTIN_number }}</p>
-        <p><strong>Street:</strong> {{ vendor_details.street }}</p>
-        <p><strong>Postal Code:</strong> {{ vendor_details.postal_code }}</p>
-        <p><strong>City:</strong> {{ vendor_details.city }}</p>
-        <p><strong>State:</strong> {{ vendor_details.state }}</p>
-        <a href="{% url 'edit_and_save_vendor_profile' vendor_details.user_profile_id %}">Edit Profile</a>
-        <a href="{% url 'landing_page_view' %}">Logout</a>
+        <div class="profile-container">
+            <h2>Vendor Profile</h2>
+            <p><strong>Name:</strong> {{ vendor_details.user_profile.name }}</p>
+            <p><strong>Email:</strong> {{ vendor_details.user_profile.email }}</p>
+            <p><strong>Mobile Number:</strong> {{ vendor_details.user_profile.mobile_number }}</p>
+            <p><strong>Type:</strong> {{ vendor_details.user_profile.type }}</p>
+            
+            <p><strong>Business Name:</strong> {{ vendor_details.business_name }}</p>
+            <p><strong>Business Phone:</strong> {{ vendor_details.business_phone }}</p>
+            <p><strong>GSTIN Number:</strong> {{ vendor_details.GSTIN_number }}</p>
+            <p><strong>Street:</strong> {{ vendor_details.street }}</p>
+            <p><strong>Postal Code:</strong> {{ vendor_details.postal_code }}</p>
+            <p><strong>City:</strong> {{ vendor_details.city }}</p>
+            <p><strong>State:</strong> {{ vendor_details.state }}</p>
+            <br>
+            <a href="{% url 'edit_and_save_vendor_profile' vendor_details.user_profile_id %}">Edit Profile</a>
+            <a href="{% url 'landing_page_view' %}">Logout</a>
+        </div>
     {% elif error_message %}
-        <p style="color: red;">{{ error_message }}</p>
+        <p class="error-message">{{ error_message }}</p>
 
     {% else %}
-        <p style="color: red;">No vendor details available.</p>
+        <p class="error-message">No vendor details available.</p>
     {% endif %}
 </body>
 </html>
