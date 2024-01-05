@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <title>Product Details</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+        crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <title>Cart Details</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -16,11 +21,12 @@
         }
 
         h1 {
-            background-color: #333;
+            background-color: #343a40;
             color: #fff;
             text-align: center;
             padding: 20px 0;
             margin: 0;
+            font-size: 2rem;
         }
 
         .product-container {
@@ -32,6 +38,11 @@
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .product-container:hover {
+            transform: scale(1.02);
         }
 
         .product-image {
@@ -45,6 +56,13 @@
             height: auto;
             border-radius: 8px;
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .product-container:hover img {
+            transform: scale(1.1);
+            z-index: 1;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
         .product-details {
@@ -55,37 +73,83 @@
         h2 {
             color: #333;
             margin-top: 0;
+            font-size: 1.5rem;
         }
 
         p {
             margin: 10px 0;
             color: #555;
         }
+
+        .update-quantity-form {
+            margin-top: 15px;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        select {
+            width: 70px;
+            margin-right: 10px;
+        }
+
+        button {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .btn-delete {
+            color: #fff;
+            background-color: #dc3545;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .btn-delete:hover {
+            background-color: #c82333;
+        }
+
+        .total-cost {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #343a40;
+        }
     </style>
 </head>
+
 <body>
-    <h1>Cart!!</h1>
-    <p>{{cus}}</p>
+    <h1>Shopping Cart</h1>
     {% for item, c in cart_and_cost %}
     <div class="product-container">
         <div class="product-image">
-            <img src="/media/{{ item.images }}" alt="{{ item.product_name }}" width="100">
+            <img src="/media/{{ item.images }}" alt="{{ item.product_name }}" width="300">
         </div>
         <div class="product-details">
             <h2>{{ item.product_name }}</h2>
-
             <p>Quantity: {{ c.quantity }}</p>
             <p>Cost: {{ c.cost }}</p>
             <form class="update-quantity-form" method="post" action="{% url 'update_quantity' cust_id=cus %}">
                 {% csrf_token %}
                 <input type="hidden" name="product_id" value="{{ item.product_id }}">
                 <label for="quantity">Select Quantity:</label>
-                <select name="quantity" id="quantity">
+                <select name="quantity" id="quantity" class="form-select">
                     {% for i in quantity_range %}
                     <option value="{{ i }}" {% if c.quantity == i %}selected{% endif %}>{{ i }}</option>
                     {% endfor %}
                 </select>
-                <button type="submit">Update Quantity</button>
+                <button type="submit" class="btn btn-success">Update Quantity</button>
             </form>
             <p>Availability: {{ item.availability }}</p>
             <p>Size: {{ item.size }}</p>
@@ -94,11 +158,11 @@
             <p>Cost: {{ item.cost }}</p>
             <p>Category: {{ item.category }}</p>
             <p>Sub-Category: {{ item.sub_category }}</p>
-            <button class="btn btn-danger" ><a href={% url 'delete_product' customer_id=cus product_id=item.product_id %}>Delete</a></button>
-            
+            <button class="btn btn-delete"><a href={% url 'delete_product' customer_id=cus product_id=item.product_id %}>Delete</a></button>
         </div>
     </div>
-{% endfor %}
-        <h3 class="text-center mt-4">Total Cost: {{ total_cost }}</h3>
+    {% endfor %}
+    <h3 class="total-cost">Total Cost: {{ total_cost }}</h3>
 </body>
+
 </html>
