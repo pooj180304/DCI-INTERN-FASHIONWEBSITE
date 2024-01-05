@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- popup_template.html -->
+<div id="popup" class="popup">
+    <div class="popup-content">
+        <p>Your product has been successfully stored!</p>
+        <!-- You can customize the content of the popup as needed -->
+        <button id="close-popup">Close</button>
+    </div>
+</div>
+
+<script>
+    document.getElementById('close-popup').addEventListener('click', function () {
+        document.getElementById('popup').style.display = 'none';
+    });
+</script>
+
+</body>
+</html>
