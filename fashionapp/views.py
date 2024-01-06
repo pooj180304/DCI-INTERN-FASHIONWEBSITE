@@ -483,6 +483,7 @@ def product_details(request, product_id, cust_id):
 from django.shortcuts import render
 
 def visualize(request, vendor_id):
+    user = get_object_or_404(UserProfile,id=vendor_id)
     # Load the dataset
     df = pd.read_csv("./fashionapp/product_dataset_with_order_details.csv")
 
@@ -517,7 +518,7 @@ def visualize(request, vendor_id):
     fig5_modified_div = plot(fig5_modified, output_type='div', include_plotlyjs=False)
 
     # Pass the HTML strings to the template along with vendor_id
-    return render(request, 'visualize.html', {'vendor_id': vendor_id, 'plot_div1': plot_div1, 'fig2_div': fig2_div, 'fig3_div': fig3_div, 'fig4_div': fig4_div, 'fig5_modified_div': fig5_modified_div})
+    return render(request, 'visualize.html', {'vendor_id': vendor_id, 'plot_div1': plot_div1, 'fig2_div': fig2_div, 'fig3_div': fig3_div, 'fig4_div': fig4_div, 'fig5_modified_div': fig5_modified_div,'vend':user})
 
 def prod_rev(req, cust_id,prodid):
     if req.method == 'POST':
